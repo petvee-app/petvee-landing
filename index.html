@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetVee — Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam</title>
+    <meta name="description" content="Quét bệnh AI, hỏi bác sĩ AI 24/7, theo dõi sức khoẻ thú cưng mỗi ngày. Tải miễn phí trên App Store và Google Play.">
+    <meta property="og:title" content="PetVee — AI chăm sóc sức khoẻ thú cưng">
+    <meta property="og:description" content="Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://petvee.app">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --orange-600: #F06439;
+            --orange-500: #F79A48;
+            --orange-400: #FDBA52;
+            --orange-200: #FFE1B8;
+            --orange-100: #FFF5E6;
+            --dark: #1A1A2E;
+            --dark-600: #2D2D44;
+            --gray-500: #6B7280;
+            --gray-300: #D1D5DB;
+            --white: #FFFFFF;
+            --gradient-hero: linear-gradient(135deg, #FFF5E6 0%, #FFE1B8 40%, #FDBA52 100%);
+            --gradient-btn: linear-gradient(135deg, #F06439 0%, #F79A48 100%);
+            --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FFF5E6 100%);
+            --shadow-sm: 0 2px 8px rgba(240, 100, 57, 0.08);
+            --shadow-md: 0 8px 32px rgba(240, 100, 57, 0.12);
+            --shadow-lg: 0 16px 48px rgba(240, 100, 57, 0.16);
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== UTILITIES ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--orange-600);
+            background: var(--orange-100);
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--gray-500);
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        .text-center { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 16px rgba(0,0,0,0.06);
+            padding: 10px 0;
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .logo-text span { color: var(--orange-600); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark-600);
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--orange-600); }
+
+        .nav-cta {
+            background: var(--gradient-btn);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 600 !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark);
+            margin: 6px 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(240,100,57,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(253,186,82,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content { max-width: 560px; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--orange-600);
+            margin-bottom: 24px;
+            border: 1px solid rgba(240,100,57,0.15);
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        .hero h1 .highlight {
+            background: var(--gradient-btn);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--dark-600);
+            margin-bottom: 36px;
+            max-width: 480px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-store {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-store:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-store svg { width: 24px; height: 24px; }
+        .btn-store-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .btn-store-info small {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        .btn-store-info strong {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: var(--white);
+            border-radius: 40px;
+            box-shadow: var(--shadow-lg), 0 0 0 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .phone-notch {
+            width: 150px;
+            height: 28px;
+            background: var(--dark);
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            z-index: 2;
+        }
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #FFF5E6 0%, #FFFFFF 40%);
+            padding: 44px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .phone-screen .app-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .phone-screen .app-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .phone-screen .app-header p {
+            font-size: 11px;
+            color: var(--gray-500);
+            margin-bottom: 0;
+        }
+        .phone-card {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .phone-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        .health-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .health-bar-label {
+            font-size: 11px;
+            color: var(--gray-500);
+            width: 50px;
+        }
+        .health-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--orange-100);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: var(--gradient-btn);
+        }
+        .phone-pet-row {
+            display: flex;
+            gap: 8px;
+        }
+        .mini-pet {
+            flex: 1;
+            background: var(--orange-100);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+        .mini-pet .pet-emoji { font-size: 28px; }
+        .mini-pet .pet-name { font-size: 10px; font-weight: 600; color: var(--dark); margin-top: 4px; }
+        .mini-pet .pet-status { font-size: 9px; color: #22C55E; font-weight: 500; }
+
+        /* Floating elements around phone */
+        .float-card {
+            position: absolute;
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            animation: float 4s ease-in-out infinite;
+            white-space: nowrap;
+        }
+        .float-card .fc-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .float-1 { top: 80px; left: -40px; animation-delay: 0s; }
+        .float-1 .fc-icon { background: #DCFCE7; }
+        .float-2 { bottom: 140px; right: -30px; animation-delay: 1.5s; }
+        .float-2 .fc-icon { background: #FFF5E6; }
+        .float-3 { top: 200px; right: -50px; animation-delay: 3s; }
+        .float-3 .fc-icon { background: #DBEAFE; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ========== PROBLEM ========== */
+        .problem {
+            background: var(--white);
+        }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .problem-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(240,100,57,0.08);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .problem-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+        .problem-icon {
+            width: 56px; height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .problem-card:nth-child(1) .problem-icon { background: #FEE2E2; }
+        .problem-card:nth-child(2) .problem-icon { background: #FEF3C7; }
+        .problem-card:nth-child(3) .problem-icon { background: #DBEAFE; }
+        .problem-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        .problem-card p {
+            font-size: 15px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ========== SOLUTION ========== */
+        .solution {
+            background: var(--orange-100);
+            position: relative;
+            overflow: hidden;
+        }
+        .solution::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(253,186,82,0.2) 0%, transparent 70%);
+        }
+        .solution .container {
+            position: relative;
+            z-index: 1;
+        }
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .solution-text .section-title {
+            margin-bottom: 20px;
+        }
+        .solution-text p {
+            font-size: 17px;
+            color: var(--dark-600);
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        .solution-stats {
+            display: flex;
+            gap: 32px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--gradient-btn);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+        .solution-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .sol-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s;
+        }
+        .sol-card:hover { transform: translateY(-4px); }
+        .sol-card:nth-child(2) { margin-top: 24px; }
+        .sol-card:nth-child(3) { margin-top: -24px; }
+        .sol-card .sol-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .sol-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+        .sol-card p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        /* ========== APP PREVIEW ========== */
+        .app-preview { background: var(--dark); color: white; overflow: hidden; }
+        .app-preview .section-label { background: rgba(240,100,57,0.2); }
+        .app-preview .section-title { color: white; }
+        .app-preview .section-subtitle { color: rgba(255,255,255,0.6); }
+        .preview-scroll {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .preview-phone {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        .preview-phone img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .preview-phone-label {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ========== FEATURES ========== */
+        .features { background: var(--white); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .feature-card {
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-btn);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:hover {
+            border-color: rgba(240,100,57,0.2);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: var(--orange-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .feature-card p {
+            font-size: 15px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ========== HOW IT WORKS ========== */
+        .how-it-works {
+            background: linear-gradient(180deg, var(--white) 0%, var(--orange-100) 100%);
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+            position: relative;
+        }
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 56px;
+            left: calc(16.67% + 28px);
+            right: calc(16.67% + 28px);
+            height: 3px;
+            background: var(--orange-200);
+            border-radius: 2px;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 56px; height: 56px;
+            background: var(--gradient-btn);
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 16px rgba(240,100,57,0.3);
+        }
+        .step h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .step p {
+            font-size: 15px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ========== PRICING ========== */
+        .pricing { background: var(--white); }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+            align-items: start;
+        }
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid rgba(0,0,0,0.06);
+            border-radius: 20px;
+            padding: 36px 28px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .pricing-card:hover { transform: translateY(-4px); }
+        .pricing-card.popular {
+            border-color: var(--orange-600);
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.04);
+        }
+        .pricing-card.popular:hover { transform: scale(1.06); }
+        .popular-badge {
+            position: absolute;
+            top: -14px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-btn);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 20px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .pricing-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .pricing-desc {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 20px;
+        }
+        .pricing-amount {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+        .pricing-amount .price {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        .pricing-amount .price-unit {
+            font-size: 15px;
+            color: var(--gray-500);
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--dark-600);
+            padding: 8px 0;
+        }
+        .pricing-features li .check {
+            width: 20px; height: 20px;
+            background: #DCFCE7;
+            color: #22C55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .btn-pricing {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            text-align: center;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-pricing.primary {
+            background: var(--gradient-btn);
+            color: white;
+            box-shadow: 0 4px 16px rgba(240,100,57,0.3);
+        }
+        .btn-pricing.primary:hover {
+            box-shadow: 0 6px 24px rgba(240,100,57,0.4);
+            transform: translateY(-2px);
+        }
+        .btn-pricing.outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--gray-300);
+        }
+        .btn-pricing.outline:hover {
+            border-color: var(--orange-600);
+            color: var(--orange-600);
+        }
+
+        /* ========== FINAL CTA ========== */
+        .final-cta {
+            background: var(--gradient-hero);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(240,100,57,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(253,186,82,0.1) 0%, transparent 50%);
+        }
+        .final-cta .container { position: relative; z-index: 1; }
+        .final-cta h2 {
+            font-size: clamp(28px, 5vw, 44px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .final-cta p {
+            font-size: 18px;
+            color: var(--dark-600);
+            margin-bottom: 36px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .final-cta .hero-buttons {
+            justify-content: center;
+        }
+        .final-cta .free-note {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-top: 20px;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 0 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-brand .logo-text { color: white; }
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-top: 16px;
+            max-width: 300px;
+        }
+        .footer h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .footer ul {
+            list-style: none;
+        }
+        .footer ul li { margin-bottom: 10px; }
+        .footer ul a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer ul a:hover { color: var(--orange-400); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 16px;
+        }
+        .footer-social a {
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+        .footer-social a:hover {
+            background: var(--orange-600);
+            color: white;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content { max-width: 100%; margin: 0 auto; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-visual { margin-top: 40px; }
+            .float-card { display: none; }
+            .solution-content { grid-template-columns: 1fr; }
+            .solution-stats { justify-content: center; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 72px 0; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .problem-grid, .features-grid, .pricing-grid, .steps {
+                grid-template-columns: 1fr;
+                max-width: 480px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .steps::before { display: none; }
+            .pricing-card.popular { transform: none; }
+            .pricing-card.popular:hover { transform: translateY(-4px); }
+            .solution-visual {
+                grid-template-columns: 1fr 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .sol-card:nth-child(2) { margin-top: 0; }
+            .sol-card:nth-child(3) { margin-top: 0; }
+            .phone-mockup { width: 260px; height: 520px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-store { width: 100%; max-width: 260px; justify-content: center; }
+        }
+
+        /* ========== MOBILE NAV ========== */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+        .mobile-nav.active { display: flex; }
+        .mobile-nav a {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        .mobile-nav a:hover { color: var(--orange-600); }
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px; right: 24px;
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><img src="logo.png" alt="PetVee"></div>
+                <div class="logo-text">Pet<span>Vee</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Tính năng</a></li>
+                <li><a href="#how-it-works">Cách dùng</a></li>
+                <li><a href="#pricing">Bảng giá</a></li>
+                <li><a href="#download" class="nav-cta">Tải miễn phí</a></li>
+            </ul>
+            <button class="mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()">&times;</button>
+        <a href="#features" onclick="toggleMobileNav()">Tính năng</a>
+        <a href="#how-it-works" onclick="toggleMobileNav()">Cách dùng</a>
+        <a href="#pricing" onclick="toggleMobileNav()">Bảng giá</a>
+        <a href="#download" onclick="toggleMobileNav()">Tải miễn phí</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge fade-up">
+                    Đầu tiên tại Việt Nam
+                </div>
+                <h1 class="fade-up delay-1">
+                    Thấu hiểu chân tình<br>
+                    <span class="highlight">Chăm sóc trọn niềm tin</span>
+                </h1>
+                <p class="fade-up delay-2">
+                    Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. 
+                    Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày — tất cả trong một app.
+                </p>
+                <div class="hero-buttons fade-up delay-3">
+                    <a href="#" class="btn-store">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        <div class="btn-store-info">
+                            <small>Tải trên</small>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="btn-store">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.29.15.61.24.94.24.33 0 .65-.08.95-.25l10.08-5.82-2.83-2.83L3.18 23.76zM1.81 2.04C1.61 2.4 1.5 2.82 1.5 3.29v17.42c0 .47.11.89.31 1.25l9.3-9.3-9.3-9.62zM21.96 10.79l-3.43-1.98-3.17 3.17 3.17 3.17 3.43-1.98c.63-.36 1.04-1 1.04-1.69s-.41-1.33-1.04-1.69zM14.54 11.98L5.73 2.8l10.11 5.84-1.3 3.34z"/></svg>
+                        <div class="btn-store-info">
+                            <small>Tải trên</small>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual fade-up delay-2">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="app-header">
+                            <h3>PetVee</h3>
+                            <p>Xin chào! Bé cưng hôm nay thế nào?</p>
+                        </div>
+                        <div class="phone-pet-row">
+                            <div class="mini-pet">
+                                <div class="pet-emoji">🐶</div>
+                                <div class="pet-name">Milo</div>
+                                <div class="pet-status">Khoẻ mạnh</div>
+                            </div>
+                            <div class="mini-pet">
+                                <div class="pet-emoji">🐱</div>
+                                <div class="pet-name">Luna</div>
+                                <div class="pet-status">Khoẻ mạnh</div>
+                            </div>
+                        </div>
+                        <div class="phone-card">
+                            <div class="phone-card-title">Check-in hôm nay</div>
+                            <div class="health-bar">
+                                <span class="health-bar-label">Mắt</span>
+                                <div class="health-bar-track"><div class="health-bar-fill" style="width:95%"></div></div>
+                            </div>
+                            <div class="health-bar">
+                                <span class="health-bar-label">Ăn uống</span>
+                                <div class="health-bar-track"><div class="health-bar-fill" style="width:88%"></div></div>
+                            </div>
+                            <div class="health-bar">
+                                <span class="health-bar-label">Vận động</span>
+                                <div class="health-bar-track"><div class="health-bar-fill" style="width:72%"></div></div>
+                            </div>
+                        </div>
+                        <div class="phone-card" style="padding: 12px 16px;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-size:20px">🔔</span>
+                                <div>
+                                    <div style="font-size:11px; font-weight:600; color:var(--dark)">Nhắc vaccine</div>
+                                    <div style="font-size:10px; color:var(--gray-500)">Milo — Dại (5 mũi) trong 3 ngày</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="float-card float-1">
+                    <div class="fc-icon">✅</div>
+                    <span>Sức khoẻ tốt!</span>
+                </div>
+                <div class="float-card float-2">
+                    <div class="fc-icon">🔍</div>
+                    <span>AI đang phân tích...</span>
+                </div>
+                <div class="float-card float-3">
+                    <div class="fc-icon">💬</div>
+                    <span>Bác sĩ AI trả lời</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem section" id="problem">
+        <div class="container text-center">
+            <span class="section-label fade-up">Vấn đề</span>
+            <h2 class="section-title fade-up delay-1">Bạn lo lắng khi thú cưng không khoẻ?</h2>
+            <p class="section-subtitle mx-auto fade-up delay-2">
+                80% chủ nuôi tại Việt Nam không biết cách nhận biết triệu chứng bệnh sớm ở thú cưng.
+            </p>
+
+            <div class="problem-grid">
+                <div class="problem-card fade-up delay-1">
+                    <div class="problem-icon">😟</div>
+                    <h3>Không biết bệnh nặng hay nhẹ</h3>
+                    <p>Bé có triệu chứng lạ nhưng bạn không chắc có cần đi khám hay chỉ theo dõi tại nhà.</p>
+                </div>
+                <div class="problem-card fade-up delay-2">
+                    <div class="problem-icon">🏥</div>
+                    <h3>Phòng khám đóng cửa</h3>
+                    <p>Nửa đêm bé ốm, phòng khám đã đóng, không hỏi được ai. Google thì quá nhiều thông tin nhiễu.</p>
+                </div>
+                <div class="problem-card fade-up delay-3">
+                    <div class="problem-icon">📅</div>
+                    <h3>Quên lịch vaccine & thuốc</h3>
+                    <p>Khó nhớ lịch tiêm phòng, tẩy giun, và theo dõi sức khoẻ hàng ngày cho nhiều bé cùng lúc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="solution section">
+        <div class="container">
+            <div class="solution-content">
+                <div class="solution-text">
+                    <span class="section-label fade-up">Giải pháp</span>
+                    <h2 class="section-title fade-up delay-1">PetVee — Bác sĩ AI<br>túc trực 24/7</h2>
+                    <p class="fade-up delay-2">
+                        Kết hợp trí tuệ nhân tạo và kiến thức thú y chuyên sâu để giúp bạn chăm sóc bé cưng mỗi ngày. 
+                        Phát hiện sớm, chăm sóc đúng cách, an tâm hơn.
+                    </p>
+                    <div class="solution-stats fade-up delay-3">
+                        <div class="stat">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Luôn sẵn sàng</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">16</div>
+                            <div class="stat-label">Chỉ số theo dõi</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">2 phút</div>
+                            <div class="stat-label">Check-in mỗi ngày</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-visual fade-up delay-2">
+                    <div class="sol-card">
+                        <div class="sol-icon">📸</div>
+                        <h4>AI Quét Bệnh</h4>
+                        <p>Chụp ảnh, nhận phân tích ngay</p>
+                    </div>
+                    <div class="sol-card">
+                        <div class="sol-icon">🤖</div>
+                        <h4>AI Bác Sĩ</h4>
+                        <p>Hỏi đáp thú y 24/7</p>
+                    </div>
+                    <div class="sol-card">
+                        <div class="sol-icon">📊</div>
+                        <h4>Theo Dõi</h4>
+                        <p>16 chỉ số sức khoẻ</p>
+                    </div>
+                    <div class="sol-card">
+                        <div class="sol-icon">💉</div>
+                        <h4>Nhắc Lịch</h4>
+                        <p>Không quên vaccine</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APP PREVIEW -->
+    <section class="app-preview section">
+        <div class="container text-center">
+            <span class="section-label fade-up">Trải nghiệm app</span>
+            <h2 class="section-title fade-up delay-1">Giao diện thân thiện, dễ sử dụng</h2>
+            <p class="section-subtitle mx-auto fade-up delay-2">
+                Được thiết kế riêng cho người dùng Việt Nam — hoàn toàn bằng tiếng Việt, 
+                giao diện ấm áp và dễ thao tác.
+            </p>
+
+            <div class="preview-scroll">
+                <div class="preview-phone fade-up delay-1">
+                    <img src="screenshot-home.png" alt="PetVee - Trang chủ theo dõi sức khoẻ">
+                    <div class="preview-phone-label">Trang chủ & Check-in</div>
+                </div>
+                <div class="preview-phone fade-up delay-2">
+                    <img src="screenshot-ai-scanner.png" alt="PetVee - AI Health Scanner">
+                    <div class="preview-phone-label">AI Bác Sĩ & Quét Bệnh</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features section" id="features">
+        <div class="container text-center">
+            <span class="section-label fade-up">Tính năng</span>
+            <h2 class="section-title fade-up delay-1">Mọi thứ bé cưng cần, trong một app</h2>
+            <p class="section-subtitle mx-auto fade-up delay-2">
+                PetVee là ứng dụng duy nhất tại Việt Nam tích hợp AI scanner, chatbot bác sĩ, 
+                check-in sức khoẻ, và quản lý vaccine trong một nền tảng.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon">📸</div>
+                    <h3>AI Quét Bệnh</h3>
+                    <p>Chụp ảnh triệu chứng ở 6 khu vực (mắt, da, miệng, tai, phân...), AI phân tích và đánh giá mức độ nghiêm trọng ngay lập tức.</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon">💬</div>
+                    <h3>AI Bác Sĩ</h3>
+                    <p>Chatbot thú y thông minh, hiểu giống loài và tình trạng bé cưng, trả lời mọi câu hỏi sức khoẻ 24/7.</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon">📋</div>
+                    <h3>Check-in Sức Khoẻ</h3>
+                    <p>Theo dõi 16 chỉ số sức khoẻ mỗi ngày. Chỉ mất 2 phút, AI phát hiện xu hướng bất thường và cảnh báo sớm.</p>
+                </div>
+                <div class="feature-card fade-up delay-1">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Tìm Phòng Khám</h3>
+                    <p>Tìm phòng khám thú y gần bạn theo vị trí, xem đánh giá và liên hệ trực tiếp trong app.</p>
+                </div>
+                <div class="feature-card fade-up delay-2">
+                    <div class="feature-icon">🛍️</div>
+                    <h3>Dịch Vụ & Mua Sắm</h3>
+                    <p>Spa, grooming, thức ăn, phụ kiện — tất cả dịch vụ và sản phẩm cho bé cưng trong một nơi.</p>
+                </div>
+                <div class="feature-card fade-up delay-3">
+                    <div class="feature-icon">💉</div>
+                    <h3>Nhắc Vaccine & Cộng Đồng</h3>
+                    <p>Tự động nhắc lịch tiêm phòng. Chia sẻ kinh nghiệm và học hỏi từ cộng đồng yêu thú cưng trên khắp Việt Nam.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works section" id="how-it-works">
+        <div class="container text-center">
+            <span class="section-label fade-up">Cách hoạt động</span>
+            <h2 class="section-title fade-up delay-1">3 bước đơn giản</h2>
+            <p class="section-subtitle mx-auto fade-up delay-2">
+                Bắt đầu chăm sóc bé cưng chỉ trong vài phút.
+            </p>
+
+            <div class="steps">
+                <div class="step fade-up delay-1">
+                    <div class="step-number">1</div>
+                    <h3>Tạo hồ sơ thú cưng</h3>
+                    <p>Thêm tên, giống loài, tuổi, cân nặng. Hỗ trợ nhiều bé cùng lúc.</p>
+                </div>
+                <div class="step fade-up delay-2">
+                    <div class="step-number">2</div>
+                    <h3>Check-in mỗi ngày</h3>
+                    <p>Chỉ mất 2 phút ghi nhận sức khoẻ. AI theo dõi và phát hiện bất thường.</p>
+                </div>
+                <div class="step fade-up delay-3">
+                    <div class="step-number">3</div>
+                    <h3>Nhận phân tích AI</h3>
+                    <p>AI tổng hợp dữ liệu, cảnh báo sớm, và đề xuất hành động phù hợp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing section" id="pricing">
+        <div class="container text-center">
+            <span class="section-label fade-up">Bảng giá</span>
+            <h2 class="section-title fade-up delay-1">Chọn gói phù hợp</h2>
+            <p class="section-subtitle mx-auto fade-up delay-2">
+                Bắt đầu miễn phí, nâng cấp khi bạn cần thêm sức mạnh AI.
+            </p>
+
+            <div class="pricing-grid">
+                <!-- Free -->
+                <div class="pricing-card fade-up delay-1">
+                    <div class="pricing-name">Miễn phí</div>
+                    <div class="pricing-desc">Khám phá PetVee</div>
+                    <div class="pricing-amount">
+                        <span class="price">0đ</span>
+                        <span class="price-unit">/ mãi mãi</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><span class="check">✓</span> Check-in sức khoẻ hàng ngày</li>
+                        <li><span class="check">✓</span> Nhắc lịch vaccine</li>
+                        <li><span class="check">✓</span> Hồ sơ nhiều thú cưng</li>
+                        <li><span class="check">✓</span> Cộng đồng & mẹo sức khoẻ</li>
+                        <li><span class="check">✓</span> Streak & gamification</li>
+                    </ul>
+                    <a href="#download" class="btn-pricing outline">Bắt đầu miễn phí</a>
+                </div>
+
+                <!-- Gói Chăm -->
+                <div class="pricing-card popular fade-up delay-2">
+                    <div class="popular-badge">Phổ biến nhất</div>
+                    <div class="pricing-name">Gói Chăm</div>
+                    <div class="pricing-desc">Cho chủ nuôi chủ động</div>
+                    <div class="pricing-amount">
+                        <span class="price">49K</span>
+                        <span class="price-unit">đ / tháng</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><span class="check">✓</span> Tất cả tính năng miễn phí</li>
+                        <li><span class="check">✓</span> AI Bác Sĩ — hỏi đáp 24/7</li>
+                        <li><span class="check">✓</span> AI Quét Bệnh cơ bản</li>
+                        <li><span class="check">✓</span> Báo cáo sức khoẻ tuần</li>
+                        <li><span class="check">✓</span> Lịch sử check-in chi tiết</li>
+                    </ul>
+                    <a href="#download" class="btn-pricing primary">Dùng thử ngay</a>
+                </div>
+
+                <!-- Gói Yêu -->
+                <div class="pricing-card fade-up delay-3">
+                    <div class="pricing-name">Gói Yêu</div>
+                    <div class="pricing-desc">Chăm sóc toàn diện</div>
+                    <div class="pricing-amount">
+                        <span class="price">99K</span>
+                        <span class="price-unit">đ / tháng</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><span class="check">✓</span> Tất cả tính năng Gói Chăm</li>
+                        <li><span class="check">✓</span> AI Quét Bệnh nâng cao</li>
+                        <li><span class="check">✓</span> Báo cáo sức khoẻ chi tiết</li>
+                        <li><span class="check">✓</span> Ưu tiên hỗ trợ</li>
+                        <li><span class="check">✓</span> Tính năng mới sớm nhất</li>
+                    </ul>
+                    <a href="#download" class="btn-pricing outline">Chọn Gói Yêu</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta section" id="download">
+        <div class="container">
+            <h2 class="fade-up">Bắt đầu chăm sóc bé cưng<br>ngay hôm nay</h2>
+            <p class="fade-up delay-1">Tải PetVee miễn phí. Bác sĩ AI luôn sẵn sàng bên bạn và bé cưng.</p>
+            <div class="hero-buttons fade-up delay-2">
+                <a href="#" class="btn-store">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    <div class="btn-store-info">
+                        <small>Tải trên</small>
+                        <strong>App Store</strong>
+                    </div>
+                </a>
+                <a href="#" class="btn-store">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.29.15.61.24.94.24.33 0 .65-.08.95-.25l10.08-5.82-2.83-2.83L3.18 23.76zM1.81 2.04C1.61 2.4 1.5 2.82 1.5 3.29v17.42c0 .47.11.89.31 1.25l9.3-9.3-9.3-9.62zM21.96 10.79l-3.43-1.98-3.17 3.17 3.17 3.17 3.43-1.98c.63-.36 1.04-1 1.04-1.69s-.41-1.33-1.04-1.69zM14.54 11.98L5.73 2.8l10.11 5.84-1.3 3.34z"/></svg>
+                    <div class="btn-store-info">
+                        <small>Tải trên</small>
+                        <strong>Google Play</strong>
+                    </div>
+                </a>
+            </div>
+            <p class="free-note fade-up delay-3">Miễn phí tải về &bull; Không cần thẻ tín dụng</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon"><img src="logo.png" alt="PetVee"></div>
+                        <div class="logo-text">Pet<span>Vee</span></div>
+                    </div>
+                    <p>Thấu hiểu chân tình — Chăm sóc trọn niềm tin. Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam.</p>
+                </div>
+                <div>
+                    <h4>Sản phẩm</h4>
+                    <ul>
+                        <li><a href="#features">Tính năng</a></li>
+                        <li><a href="#pricing">Bảng giá</a></li>
+                        <li><a href="#download">Tải app</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Hỗ trợ</h4>
+                    <ul>
+                        <li><a href="mailto:hello@petvee.app">Liên hệ</a></li>
+                        <li><a href="mailto:hello@petvee.app">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Pháp lý</h4>
+                    <ul>
+                        <li><a href="privacy.html">Chính sách bảo mật</a></li>
+                        <li><a href="terms.html">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 PetVee. All rights reserved.</span>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Instagram">in</a>
+                    <a href="#" aria-label="TikTok">tk</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // Mobile nav
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
