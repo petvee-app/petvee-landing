@@ -257,7 +257,7 @@
     }
     .hero .container {
       display: grid;
-      grid-template-columns: 60fr 40fr;
+      grid-template-columns: 55fr 45fr;
       gap: 60px;
       align-items: center;
       padding-top: 60px;
@@ -334,18 +334,19 @@
       border-radius: 42px;
     }
     .hero-mascot {
-      position: absolute;
-      bottom: -20px;
-      left: -40px;
-      width: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       background: transparent;
       border: none;
       box-shadow: none;
       border-radius: 0;
     }
     .hero-mascot img {
-      width: 100%;
-      height: auto;
+      max-height: 500px;
+      width: auto;
+      max-width: 100%;
       display: block;
       background: transparent;
       object-fit: contain;
@@ -884,8 +885,8 @@
       .hero-body { font-size: 16px; margin-left: auto; margin-right: auto; }
       .hero-cta-row { justify-content: center; }
       .trust-badges { justify-content: center; }
-      .phone-frame { transform: none; width: 280px; min-width: 0; padding: 8px; }
-      .hero-mascot { left: -20px; width: 120px; }
+      .hero-visual { order: -1; }
+      .hero-mascot img { max-height: 300px; margin: 0 auto; }
 
       .problem-grid { grid-template-columns: 1fr; }
       .problem-title { font-size: 28px; }
@@ -960,9 +961,8 @@
         </div>
       </div>
       <div class="hero-visual">
-        <img src="images/screenshot-home.png" alt="PetVee App" style="max-width:360px;width:100%;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.12);" loading="eager">
         <div class="hero-mascot">
-          <img src="images/mascots/hero-duo.png" alt="Dr. Vee và Mochi" width="320" loading="eager">
+          <img src="images/mascots/hero-duo.png" alt="Dr. Vee và Mochi" loading="eager">
         </div>
       </div>
     </div>
