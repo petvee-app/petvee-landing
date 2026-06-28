@@ -135,6 +135,19 @@
       text-decoration: none;
     }
 
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #FF8C42, #FF6B35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
     .logo-text {
       font-size: 22px;
       font-weight: 800;
@@ -143,6 +156,8 @@
       opacity: 1 !important;
       visibility: visible !important;
     }
+    .navbar .logo-text { color: #2D1B0E; }
+    .navbar.scrolled .logo-text { color: #FFFAF0; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -297,6 +312,7 @@
     }
     .phone-frame {
       width: 340px;
+      min-width: 340px;
       border-radius: 52px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 10px rgba(45,27,14,0.06);
       overflow: hidden;
@@ -866,7 +882,7 @@
       .hero-body { font-size: 16px; margin-left: auto; margin-right: auto; }
       .hero-cta-row { justify-content: center; }
       .trust-badges { justify-content: center; }
-      .phone-frame { transform: none; width: 280px; padding: 8px; }
+      .phone-frame { transform: none; width: 280px; min-width: 0; padding: 8px; }
       .hero-mascot { left: -20px; width: 120px; }
 
       .problem-grid { grid-template-columns: 1fr; }
@@ -893,7 +909,7 @@
 
     @media (max-width: 480px) {
       .hero-headline { font-size: 30px; }
-      .phone-frame { width: 200px; }
+      .phone-frame { width: 200px; min-width: 0; }
     }
   </style>
 </head>
@@ -903,7 +919,7 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="#" class="logo">
-        <img src="images/logo-pv.png" alt="PetVee" height="44" style="display:block;flex-shrink:0;">
+        <div class="logo-icon">PV</div>
         <span class="logo-text">PetVee</span>
       </a>
       <ul class="nav-links">
@@ -999,7 +1015,7 @@
         </ul>
       </div>
       <div class="solution-mascot-wrap" data-aos="fade-up" data-aos-delay="100">
-        <img src="images/mascots/drvee-confident.png" alt="Dr. Vee tự tin" class="solution-mascot" loading="lazy" width="600">
+        <img src="images/mascots/drvee-confident.png" alt="Dr. Vee tự tin" class="solution-mascot" loading="lazy" style="max-height: 400px; width: auto; height: auto; object-fit: contain;">
       </div>
     </div>
   </section>
@@ -1158,7 +1174,7 @@
         <!-- Col 1 -->
         <div>
           <a href="#" class="logo">
-            <img src="images/logo-pv.png" alt="PetVee" height="44" style="display:block;flex-shrink:0;">
+            <div class="logo-icon">PV</div>
             <span class="logo-text">PetVee</span>
           </a>
           <p class="footer-tagline">Thấu hiểu chân tình – Chăm sóc trọn niềm tin.</p>
