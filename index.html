@@ -151,6 +151,8 @@
       font-weight: 800;
       color: #FFFAF0;
       letter-spacing: -0.02em;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
     .nav-links {
       display: flex;
@@ -305,18 +307,21 @@
       position: relative;
     }
     .phone-frame {
-      width: 280px;
-      border-radius: 44px;
-      box-shadow: 0 32px 80px rgba(45,27,14,0.18), 0 0 0 8px rgba(45,27,14,0.06);
+      width: 340px;
+      border-radius: 52px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 10px rgba(45,27,14,0.06);
       overflow: hidden;
       transform: rotate(5deg);
       position: relative;
       flex-shrink: 0;
+      padding: 12px;
+      background: rgba(255,255,255,0.08);
     }
     .phone-frame img {
       display: block;
       width: 100%;
       height: auto;
+      border-radius: 42px;
     }
     .hero-mascot {
       position: absolute;
@@ -865,7 +870,7 @@
       .hero-body { font-size: 16px; margin-left: auto; margin-right: auto; }
       .hero-cta-row { justify-content: center; }
       .trust-badges { justify-content: center; }
-      .phone-frame { transform: none; width: 240px; }
+      .phone-frame { transform: none; width: 280px; padding: 8px; }
       .hero-mascot { left: -20px; width: 120px; }
 
       .problem-grid { grid-template-columns: 1fr; }
@@ -902,6 +907,7 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="#" class="logo">
+        <!-- REPLACE: swap CSS logo with <img src="images/logo-pv.png" alt="PetVee" height="40" style="display:block"> when file is available -->
         <div class="logo-icon">PV</div>
         <span class="logo-text">PetVee</span>
       </a>
