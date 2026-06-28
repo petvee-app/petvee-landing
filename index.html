@@ -1,1461 +1,1233 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetVee — Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam</title>
-    <meta name="description" content="Quét bệnh AI, hỏi bác sĩ AI 24/7, theo dõi sức khoẻ thú cưng mỗi ngày. Tải miễn phí trên App Store và Google Play.">
-    <meta property="og:title" content="PetVee — AI chăm sóc sức khoẻ thú cưng">
-    <meta property="og:description" content="Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://petvee.app">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetVee — Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam</title>
+  <meta name="description" content="Quét bệnh AI, hỏi bác sĩ AI 24/7, theo dõi sức khoẻ thú cưng mỗi ngày. Tải miễn phí.">
+  <meta property="og:title" content="PetVee — AI chăm sóc sức khoẻ thú cưng">
+  <meta property="og:description" content="Ứng dụng AI đầu tiên tại Việt Nam. Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày.">
+  <meta property="og:image" content="https://petvee.app/images/og-image.png">
+  <meta property="og:url" content="https://petvee.app">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --orange-600: #F06439;
-            --orange-500: #F79A48;
-            --orange-400: #FDBA52;
-            --orange-200: #FFE1B8;
-            --orange-100: #FFF5E6;
-            --dark: #1A1A2E;
-            --dark-600: #2D2D44;
-            --gray-500: #6B7280;
-            --gray-300: #D1D5DB;
-            --white: #FFFFFF;
-            --gradient-hero: linear-gradient(135deg, #FFF5E6 0%, #FFE1B8 40%, #FDBA52 100%);
-            --gradient-btn: linear-gradient(135deg, #F06439 0%, #F79A48 100%);
-            --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FFF5E6 100%);
-            --shadow-sm: 0 2px 8px rgba(240, 100, 57, 0.08);
-            --shadow-md: 0 8px 32px rgba(240, 100, 57, 0.12);
-            --shadow-lg: 0 16px 48px rgba(240, 100, 57, 0.16);
-            --radius: 16px;
-            --radius-sm: 12px;
-        }
+    :root {
+      --bg-cream: #FFFAF3;
+      --bg-white: #FFFFFF;
+      --bg-warm: #FFF5EB;
+      --text-heading: #2D1B0E;
+      --text-body: #5C4033;
+      --text-muted: #A0785A;
+      --orange-primary: #FF6B35;
+      --orange-light: #FF8C42;
+      --orange-lighter: #FFAB76;
+      --orange-bg: #FFF1E6;
+      --green-success: #00B894;
+      --purple-premium: #6C5CE7;
+      --blue-info: #0984E3;
+      --yellow-streak: #FFD93D;
+      --red-alert: #E74C3C;
+      --dark-navy: #1A1A2E;
+      --dark-card: #2D2D44;
+      --dark-deep: #0D1B2A;
+      --dark-gradient: linear-gradient(135deg, #2D1B4E 0%, #1A1A2E 50%, #0D1B2A 100%);
+      --cta-gradient: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+      --cta-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+      --cta-hover-shadow: 0 6px 16px rgba(255, 107, 53, 0.35);
+    }
 
-        html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            color: var(--dark);
-            background: var(--white);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      color: var(--text-body);
+      background: var(--bg-cream);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        /* ========== UTILITIES ========== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .section {
-            padding: 100px 0;
-        }
+    /* ── CTA BUTTON ── */
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: var(--cta-gradient);
+      color: #FFFFFF;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      border: none;
+      border-radius: 16px;
+      box-shadow: var(--cta-shadow);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-cta:hover {
+      box-shadow: var(--cta-hover-shadow);
+      transform: translateY(-1px);
+    }
+    .btn-cta:active { transform: scale(0.98); }
+    .btn-cta-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-cta-outline:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+    }
 
-        .section-label {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--orange-600);
-            background: var(--orange-100);
-            padding: 6px 16px;
-            border-radius: 100px;
-            margin-bottom: 16px;
-        }
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: var(--cta-gradient);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFAF0;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #FFFFFF; }
+    .nav-links .nav-cta-link a {
+      color: #FFFFFF;
+      background: var(--cta-gradient);
+      padding: 9px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+    .nav-links .nav-cta-link a:hover {
+      box-shadow: var(--cta-shadow);
+      transform: translateY(-1px);
+    }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(26, 26, 46, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .mobile-nav.active { display: flex; }
+    .mobile-nav a {
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--orange-primary); }
+    .mobile-nav-close {
+      position: absolute;
+      top: 24px; right: 28px;
+      background: none;
+      border: none;
+      font-size: 36px;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      line-height: 1;
+    }
 
-        .section-title {
-            font-size: clamp(28px, 5vw, 42px);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            color: var(--dark);
-        }
+    /* ── HERO ── */
+    .hero {
+      background: var(--bg-cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,107,53,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 60px;
+      align-items: center;
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+    .hero-headline {
+      font-size: 56px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text-heading);
+      margin-bottom: 8px;
+    }
+    .hero-subheadline {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-body);
+      margin-bottom: 20px;
+    }
+    .hero-body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-body);
+      margin-bottom: 36px;
+      max-width: 500px;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255,107,53,0.07);
+      border: 1px solid rgba(255,107,53,0.12);
+      border-radius: 100px;
+      padding: 6px 14px;
+    }
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .phone-frame {
+      width: 280px;
+      border-radius: 44px;
+      box-shadow: 0 32px 80px rgba(45,27,14,0.18), 0 0 0 8px rgba(45,27,14,0.06);
+      overflow: hidden;
+      transform: rotate(5deg);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .phone-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .hero-mascot {
+      position: absolute;
+      bottom: -20px;
+      left: -40px;
+      width: 160px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .hero-mascot img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: transparent;
+    }
+    @keyframes mascot-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-mascot img { animation: mascot-bounce 2s ease-in-out infinite; }
+    }
 
-        .section-subtitle {
-            font-size: 17px;
-            color: var(--gray-500);
-            line-height: 1.7;
-            max-width: 600px;
-        }
+    /* Kinetic headline */
+    @keyframes wordFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .kinetic-word {
+      display: inline-block;
+      opacity: 0;
+      animation: wordFadeIn 0.5s ease forwards;
+    }
 
-        .text-center { text-align: center; }
-        .mx-auto { margin-left: auto; margin-right: auto; }
+    /* ── PROBLEM ── */
+    .problem {
+      background: var(--dark-gradient);
+      padding: 100px 0;
+    }
+    .problem .container { text-align: center; }
+    .problem-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFF5E6;
+      margin-bottom: 12px;
+    }
+    .problem-subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      text-align: left;
+    }
+    .problem-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .problem-mascot {
+      height: 90px;
+      width: auto;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .problem-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFF5E6;
+      margin-bottom: 10px;
+    }
+    .problem-card p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+    }
 
-        /* Animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
+    /* ── SOLUTION ── */
+    .solution {
+      background: linear-gradient(180deg, #FFF5EB 0%, #FFFAF3 100%);
+      padding: 100px 0;
+    }
+    .solution .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .solution-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-heading);
+      margin-bottom: 12px;
+    }
+    .solution-subtitle {
+      font-size: 18px;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .solution-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .solution-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 17px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+    .bullet-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .solution-mascot-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .solution-mascot {
+      width: 300px;
+      max-width: 100%;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .solution-mascot { animation: mascot-bounce 2.5s ease-in-out infinite; }
+    }
 
-        /* ========== NAVBAR ========== */
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            padding: 16px 0;
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 1px 16px rgba(0,0,0,0.06);
-            padding: 10px 0;
-        }
-        .navbar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--dark);
-        }
-        .logo-text span { color: var(--orange-600); }
+    /* ── FEATURES BENTO ── */
+    .features {
+      background: var(--bg-white);
+      padding: 100px 0;
+    }
+    .features .container { text-align: center; }
+    .section-label {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange-primary);
+      background: var(--orange-bg);
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-heading);
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--text-body);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 56px;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+    .bento-card {
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .bento-card.full-width { grid-column: 1 / -1; }
+    .bento-card-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .bento-card.full-width .bento-card-inner { align-items: center; }
+    .bento-text { flex: 1; }
+    .bento-accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 4px 0 0 4px;
+    }
+    .bento-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .bento-desc {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+    .bento-mascot {
+      width: 100px;
+      height: auto;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+    .bento-card.full-width .bento-mascot { width: 130px; }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--dark-600);
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--orange-600); }
+    /* card color identities */
+    .bento-scanner {
+      background: linear-gradient(145deg, #EBE4FF, #D6CCFF);
+      padding-left: 32px;
+    }
+    .bento-scanner .bento-accent { background: linear-gradient(180deg, #6C5CE7, #9B59B6); }
+    .bento-scanner .bento-title { color: var(--purple-premium); }
 
-        .nav-cta {
-            background: var(--gradient-btn);
-            color: white !important;
-            padding: 10px 24px;
-            border-radius: 100px;
-            font-weight: 600 !important;
-            transition: transform 0.2s, box-shadow 0.2s !important;
-        }
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
+    .bento-chatbot { background: linear-gradient(145deg, #E8F8F5, #D5F5E3); }
+    .bento-chatbot .bento-title { color: var(--green-success); }
 
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-        }
-        .mobile-toggle span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--dark);
-            margin: 6px 0;
-            transition: all 0.3s;
-            border-radius: 2px;
-        }
+    .bento-checkin { background: linear-gradient(145deg, #FFF5E6, #FFECD2); }
+    .bento-checkin .bento-title { color: var(--orange-primary); }
 
-        /* ========== HERO ========== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: var(--gradient-hero);
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -200px; right: -200px;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(240,100,57,0.12) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -100px; left: -100px;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(253,186,82,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-content { max-width: 560px; }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(10px);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--orange-600);
-            margin-bottom: 24px;
-            border: 1px solid rgba(240,100,57,0.15);
-        }
+    .bento-vaccine { background: linear-gradient(145deg, #FFF8E1, #FFECB3); }
+    .bento-vaccine .bento-title { color: #8B6914; }
 
-        .hero h1 {
-            font-size: clamp(36px, 6vw, 56px);
-            font-weight: 800;
-            line-height: 1.25;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        .hero h1 .highlight {
-            background: var(--gradient-btn);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p {
-            font-size: 18px;
-            line-height: 1.7;
-            color: var(--dark-600);
-            margin-bottom: 36px;
-            max-width: 480px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        .btn-store {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--dark);
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: var(--radius);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-store:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-        .btn-store svg { width: 24px; height: 24px; }
-        .btn-store-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .btn-store-info small {
-            font-size: 11px;
-            opacity: 0.7;
-        }
-        .btn-store-info strong {
-            font-size: 15px;
-            font-weight: 600;
-        }
+    .bento-nutrition { background: linear-gradient(145deg, #E8F8F5, #C8F0E8); }
+    .bento-nutrition .bento-title { color: var(--green-success); }
 
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        .phone-mockup {
-            width: 300px;
-            height: 600px;
-            background: var(--white);
-            border-radius: 40px;
-            box-shadow: var(--shadow-lg), 0 0 0 8px rgba(0,0,0,0.08);
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .phone-notch {
-            width: 150px;
-            height: 28px;
-            background: var(--dark);
-            border-radius: 0 0 20px 20px;
-            position: absolute;
-            top: 0;
-            z-index: 2;
-        }
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #FFF5E6 0%, #FFFFFF 40%);
-            padding: 44px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-        .phone-screen .app-header {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .phone-screen .app-header h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        .phone-screen .app-header p {
-            font-size: 11px;
-            color: var(--gray-500);
-            margin-bottom: 0;
-        }
-        .phone-card {
-            width: 100%;
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .phone-card-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-        .health-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .health-bar-label {
-            font-size: 11px;
-            color: var(--gray-500);
-            width: 50px;
-        }
-        .health-bar-track {
-            flex: 1;
-            height: 8px;
-            background: var(--orange-100);
-            border-radius: 100px;
-            overflow: hidden;
-        }
-        .health-bar-fill {
-            height: 100%;
-            border-radius: 100px;
-            background: var(--gradient-btn);
-        }
-        .phone-pet-row {
-            display: flex;
-            gap: 8px;
-        }
-        .mini-pet {
-            flex: 1;
-            background: var(--orange-100);
-            border-radius: 12px;
-            padding: 12px 8px;
-            text-align: center;
-        }
-        .mini-pet .pet-emoji { font-size: 28px; }
-        .mini-pet .pet-name { font-size: 10px; font-weight: 600; color: var(--dark); margin-top: 4px; }
-        .mini-pet .pet-status { font-size: 9px; color: #22C55E; font-weight: 500; }
+    .bento-community { background: linear-gradient(145deg, #FFF0F5, #FFE4EE); }
+    .bento-community .bento-title { color: #E84393; }
 
-        /* Floating elements around phone */
-        .float-card {
-            position: absolute;
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 500;
-            animation: float 4s ease-in-out infinite;
-            white-space: nowrap;
-        }
-        .float-card .fc-icon {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        .float-1 { top: 80px; left: -40px; animation-delay: 0s; }
-        .float-1 .fc-icon { background: #DCFCE7; }
-        .float-2 { bottom: 140px; right: -30px; animation-delay: 1.5s; }
-        .float-2 .fc-icon { background: #FFF5E6; }
-        .float-3 { top: 200px; right: -50px; animation-delay: 3s; }
-        .float-3 .fc-icon { background: #DBEAFE; }
+    /* ── PRICING ── */
+    .pricing {
+      background: var(--dark-gradient);
+      padding: 100px 0;
+      text-align: center;
+    }
+    .pricing-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFF5E6;
+      margin-bottom: 12px;
+    }
+    .pricing-subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 56px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .pricing-card {
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: left;
+      position: relative;
+    }
+    .pricing-card.free {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .pricing-card.cham {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid var(--orange-primary);
+    }
+    .pricing-card.yeu {
+      background: linear-gradient(135deg, #FF6B35, #FF8C5A);
+    }
+    .pricing-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .badge-popular {
+      background: var(--yellow-streak);
+      color: #1A1A2E;
+    }
+    .badge-hot {
+      background: rgba(255,255,255,0.2);
+      color: #FFFFFF;
+    }
+    .pricing-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .pricing-card.cham .pricing-name { color: var(--orange-primary); }
+    .pricing-price {
+      font-size: 40px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+    .pricing-period {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+    }
+    .pricing-card.cham .pricing-period { color: rgba(255,255,255,0.6); }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+    .pricing-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(0,184,148,0.2);
+      color: var(--green-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pricing-card.yeu .pricing-check {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .btn-pricing {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+      border-radius: 14px;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-pricing-ghost {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-pricing-ghost:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+    .btn-pricing-orange {
+      background: var(--cta-gradient);
+      color: #fff;
+      box-shadow: var(--cta-shadow);
+    }
+    .btn-pricing-orange:hover {
+      box-shadow: var(--cta-hover-shadow);
+      transform: translateY(-1px);
+    }
+    .btn-pricing-white {
+      background: #fff;
+      color: var(--orange-primary);
+    }
+    .btn-pricing-white:hover {
+      background: #FFF5EB;
+      transform: translateY(-1px);
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%);
+      padding: 100px 0;
+      text-align: center;
+    }
+    .cta-mascot {
+      width: 200px;
+      margin: 0 auto 28px;
+      display: block;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .cta-title {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--text-heading);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .cta-subtitle {
+      font-size: 18px;
+      color: #6B5A4A;
+      margin-bottom: 36px;
+    }
+    .cta-web-link {
+      display: block;
+      margin-top: 20px;
+      font-size: 15px;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .cta-web-link:hover { color: var(--orange-primary); }
 
-        /* ========== PROBLEM ========== */
-        .problem {
-            background: var(--white);
-        }
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
-        }
-        .problem-card {
-            background: var(--gradient-card);
-            border: 1px solid rgba(240,100,57,0.08);
-            border-radius: var(--radius);
-            padding: 36px 28px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .problem-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-        }
-        .problem-icon {
-            width: 56px; height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        .problem-card:nth-child(1) .problem-icon { background: #FEE2E2; }
-        .problem-card:nth-child(2) .problem-icon { background: #FEF3C7; }
-        .problem-card:nth-child(3) .problem-icon { background: #DBEAFE; }
-        .problem-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        .problem-card p {
-            font-size: 15px;
-            color: var(--gray-500);
-            line-height: 1.6;
-        }
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--dark-navy);
+      padding: 64px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-copyright {
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 12px;
+    }
+    .footer-col-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange-primary); }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-contact span {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .footer-social a {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .footer-social a:hover {
+      background: var(--orange-primary);
+      color: #fff;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 24px;
+    }
 
-        /* ========== SOLUTION ========== */
-        .solution {
-            background: var(--orange-100);
-            position: relative;
-            overflow: hidden;
-        }
-        .solution::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -20%;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(253,186,82,0.2) 0%, transparent 70%);
-        }
-        .solution .container {
-            position: relative;
-            z-index: 1;
-        }
-        .solution-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-        .solution-text .section-title {
-            margin-bottom: 20px;
-        }
-        .solution-text p {
-            font-size: 17px;
-            color: var(--dark-600);
-            line-height: 1.7;
-            margin-bottom: 32px;
-        }
-        .solution-stats {
-            display: flex;
-            gap: 32px;
-        }
-        .stat {
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 36px;
-            font-weight: 800;
-            background: var(--gradient-btn);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .stat-label {
-            font-size: 13px;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-        .solution-visual {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .sol-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 28px 20px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.3s;
-        }
-        .sol-card:hover { transform: translateY(-4px); }
-        .sol-card:nth-child(2) { margin-top: 24px; }
-        .sol-card:nth-child(3) { margin-top: -24px; }
-        .sol-card .sol-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-        .sol-card h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 6px;
-        }
-        .sol-card p {
-            font-size: 13px;
-            color: var(--gray-500);
-            line-height: 1.5;
-        }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .bento-grid { grid-template-columns: 1fr 1fr; }
+    }
 
-        /* ========== APP PREVIEW ========== */
-        .app-preview { background: var(--dark); color: white; overflow: hidden; }
-        .app-preview .section-label { background: rgba(240,100,57,0.2); }
-        .app-preview .section-title { color: white; }
-        .app-preview .section-subtitle { color: rgba(255,255,255,0.6); }
-        .preview-scroll {
-            display: flex;
-            gap: 32px;
-            margin-top: 48px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .preview-phone {
-            width: 280px;
-            flex-shrink: 0;
-        }
-        .preview-phone img {
-            width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-        .preview-phone-label {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.7);
-        }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: flex; }
 
-        /* ========== FEATURES ========== */
-        .features { background: var(--white); }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
-        }
-        .feature-card {
-            background: var(--white);
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: var(--radius);
-            padding: 36px 28px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: var(--gradient-btn);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .feature-card:hover {
-            border-color: rgba(240,100,57,0.2);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-4px);
-        }
-        .feature-card:hover::before { opacity: 1; }
-        .feature-icon {
-            width: 52px; height: 52px;
-            border-radius: 14px;
-            background: var(--orange-100);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            margin-bottom: 20px;
-        }
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-        .feature-card p {
-            font-size: 15px;
-            color: var(--gray-500);
-            line-height: 1.6;
-        }
+      .hero .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 40px;
+        padding-bottom: 60px;
+        gap: 40px;
+      }
+      .hero-headline { font-size: 36px; }
+      .hero-subheadline { font-size: 18px; }
+      .hero-body { font-size: 16px; margin-left: auto; margin-right: auto; }
+      .hero-cta-row { justify-content: center; }
+      .trust-badges { justify-content: center; }
+      .phone-frame { transform: none; width: 240px; }
+      .hero-mascot { left: -20px; width: 120px; }
 
-        /* ========== HOW IT WORKS ========== */
-        .how-it-works {
-            background: linear-gradient(180deg, var(--white) 0%, var(--orange-100) 100%);
-        }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 48px;
-            position: relative;
-        }
-        .steps::before {
-            content: '';
-            position: absolute;
-            top: 56px;
-            left: calc(16.67% + 28px);
-            right: calc(16.67% + 28px);
-            height: 3px;
-            background: var(--orange-200);
-            border-radius: 2px;
-        }
-        .step {
-            text-align: center;
-            position: relative;
-        }
-        .step-number {
-            width: 56px; height: 56px;
-            background: var(--gradient-btn);
-            color: white;
-            font-size: 22px;
-            font-weight: 800;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 4px 16px rgba(240,100,57,0.3);
-        }
-        .step h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-        .step p {
-            font-size: 15px;
-            color: var(--gray-500);
-            line-height: 1.6;
-            max-width: 280px;
-            margin: 0 auto;
-        }
+      .problem-grid { grid-template-columns: 1fr; }
+      .problem-title { font-size: 28px; }
 
-        /* ========== PRICING ========== */
-        .pricing { background: var(--white); }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
-            align-items: start;
-        }
-        .pricing-card {
-            background: var(--white);
-            border: 2px solid rgba(0,0,0,0.06);
-            border-radius: 20px;
-            padding: 36px 28px;
-            position: relative;
-            transition: transform 0.3s;
-        }
-        .pricing-card:hover { transform: translateY(-4px); }
-        .pricing-card.popular {
-            border-color: var(--orange-600);
-            box-shadow: var(--shadow-lg);
-            transform: scale(1.04);
-        }
-        .pricing-card.popular:hover { transform: scale(1.06); }
-        .popular-badge {
-            position: absolute;
-            top: -14px; left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-btn);
-            color: white;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 6px 20px;
-            border-radius: 100px;
-            white-space: nowrap;
-        }
-        .pricing-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-        .pricing-desc {
-            font-size: 14px;
-            color: var(--gray-500);
-            margin-bottom: 20px;
-        }
-        .pricing-amount {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-            margin-bottom: 24px;
-        }
-        .pricing-amount .price {
-            font-size: 40px;
-            font-weight: 800;
-            color: var(--dark);
-        }
-        .pricing-amount .price-unit {
-            font-size: 15px;
-            color: var(--gray-500);
-        }
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 28px;
-        }
-        .pricing-features li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: var(--dark-600);
-            padding: 8px 0;
-        }
-        .pricing-features li .check {
-            width: 20px; height: 20px;
-            background: #DCFCE7;
-            color: #22C55E;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-        .btn-pricing {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            text-align: center;
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-        }
-        .btn-pricing.primary {
-            background: var(--gradient-btn);
-            color: white;
-            box-shadow: 0 4px 16px rgba(240,100,57,0.3);
-        }
-        .btn-pricing.primary:hover {
-            box-shadow: 0 6px 24px rgba(240,100,57,0.4);
-            transform: translateY(-2px);
-        }
-        .btn-pricing.outline {
-            background: transparent;
-            color: var(--dark);
-            border: 2px solid var(--gray-300);
-        }
-        .btn-pricing.outline:hover {
-            border-color: var(--orange-600);
-            color: var(--orange-600);
-        }
+      .solution .container { grid-template-columns: 1fr; gap: 40px; }
+      .solution-mascot-wrap { order: -1; }
+      .solution-mascot { width: 220px; }
+      .solution-title { font-size: 28px; }
 
-        /* ========== FINAL CTA ========== */
-        .final-cta {
-            background: var(--gradient-hero);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .final-cta::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(240,100,57,0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(253,186,82,0.1) 0%, transparent 50%);
-        }
-        .final-cta .container { position: relative; z-index: 1; }
-        .final-cta h2 {
-            font-size: clamp(28px, 5vw, 44px);
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-        .final-cta p {
-            font-size: 18px;
-            color: var(--dark-600);
-            margin-bottom: 36px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .final-cta .hero-buttons {
-            justify-content: center;
-        }
-        .final-cta .free-note {
-            font-size: 14px;
-            color: var(--gray-500);
-            margin-top: 20px;
-        }
+      .section-title { font-size: 28px; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card.full-width { grid-column: 1; }
+      .bento-mascot { width: 80px; }
+      .bento-card.full-width .bento-mascot { width: 90px; }
 
-        /* ========== FOOTER ========== */
-        .footer {
-            background: var(--dark);
-            color: rgba(255,255,255,0.7);
-            padding: 60px 0 30px;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-        .footer-brand .logo-text { color: white; }
-        .footer-brand p {
-            font-size: 14px;
-            line-height: 1.7;
-            margin-top: 16px;
-            max-width: 300px;
-        }
-        .footer h4 {
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        .footer ul {
-            list-style: none;
-        }
-        .footer ul li { margin-bottom: 10px; }
-        .footer ul a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        .footer ul a:hover { color: var(--orange-400); }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-        .footer-social {
-            display: flex;
-            gap: 16px;
-        }
-        .footer-social a {
-            width: 36px; height: 36px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            transition: all 0.2s;
-            font-size: 16px;
-        }
-        .footer-social a:hover {
-            background: var(--orange-600);
-            color: white;
-        }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .pricing-title { font-size: 28px; }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 1024px) {
-            .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero-content { max-width: 100%; margin: 0 auto; }
-            .hero p { margin-left: auto; margin-right: auto; }
-            .hero-buttons { justify-content: center; }
-            .hero-visual { margin-top: 40px; }
-            .float-card { display: none; }
-            .solution-content { grid-template-columns: 1fr; }
-            .solution-stats { justify-content: center; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
+      .cta-title { font-size: 28px; }
 
-        @media (max-width: 768px) {
-            .section { padding: 72px 0; }
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .problem-grid, .features-grid, .pricing-grid, .steps {
-                grid-template-columns: 1fr;
-                max-width: 480px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .steps::before { display: none; }
-            .pricing-card.popular { transform: none; }
-            .pricing-card.popular:hover { transform: translateY(-4px); }
-            .solution-visual {
-                grid-template-columns: 1fr 1fr;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-            .sol-card:nth-child(2) { margin-top: 0; }
-            .sol-card:nth-child(3) { margin-top: 0; }
-            .phone-mockup { width: 260px; height: 520px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .btn-store { width: 100%; max-width: 260px; justify-content: center; }
-        }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+    }
 
-        /* ========== MOBILE NAV ========== */
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(20px);
-            z-index: 200;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 32px;
-        }
-        .mobile-nav.active { display: flex; }
-        .mobile-nav a {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--dark);
-            text-decoration: none;
-        }
-        .mobile-nav a:hover { color: var(--orange-600); }
-        .mobile-nav-close {
-            position: absolute;
-            top: 20px; right: 24px;
-            background: none;
-            border: none;
-            font-size: 32px;
-            cursor: pointer;
-            color: var(--dark);
-        }
-    </style>
+    @media (max-width: 480px) {
+      .hero-headline { font-size: 30px; }
+      .phone-frame { width: 200px; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <a href="#" class="logo">
-                <div class="logo-icon"><img src="logo.png" alt="PetVee"></div>
-                <div class="logo-text">Pet<span>Vee</span></div>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#features">Tính năng</a></li>
-                <li><a href="#how-it-works">Cách dùng</a></li>
-                <li><a href="#pricing">Bảng giá</a></li>
-                <li><a href="#download" class="nav-cta">Tải miễn phí</a></li>
-            </ul>
-            <button class="mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav">
-        <button class="mobile-nav-close" onclick="toggleMobileNav()">&times;</button>
-        <a href="#features" onclick="toggleMobileNav()">Tính năng</a>
-        <a href="#how-it-works" onclick="toggleMobileNav()">Cách dùng</a>
-        <a href="#pricing" onclick="toggleMobileNav()">Bảng giá</a>
-        <a href="#download" onclick="toggleMobileNav()">Tải miễn phí</a>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-icon">PV</div>
+        <span class="logo-text">PetVee</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Tính năng</a></li>
+        <li><a href="#pricing">Bảng giá</a></li>
+        <li class="nav-cta-link"><a href="#download">Tải app</a></li>
+      </ul>
+      <button class="mobile-toggle" onclick="openMobileNav()" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge fade-up">
-                    Đầu tiên tại Việt Nam
-                </div>
-                <h1 class="fade-up delay-1">
-                    Thấu hiểu chân tình<br>
-                    <span class="highlight">Chăm sóc trọn niềm tin</span>
-                </h1>
-                <p class="fade-up delay-2">
-                    Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. 
-                    Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày — tất cả trong một app.
-                </p>
-                <div class="hero-buttons fade-up delay-3">
-                    <a href="#" class="btn-store">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                        <div class="btn-store-info">
-                            <small>Tải trên</small>
-                            <strong>App Store</strong>
-                        </div>
-                    </a>
-                    <a href="#" class="btn-store">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.29.15.61.24.94.24.33 0 .65-.08.95-.25l10.08-5.82-2.83-2.83L3.18 23.76zM1.81 2.04C1.61 2.4 1.5 2.82 1.5 3.29v17.42c0 .47.11.89.31 1.25l9.3-9.3-9.3-9.62zM21.96 10.79l-3.43-1.98-3.17 3.17 3.17 3.17 3.43-1.98c.63-.36 1.04-1 1.04-1.69s-.41-1.33-1.04-1.69zM14.54 11.98L5.73 2.8l10.11 5.84-1.3 3.34z"/></svg>
-                        <div class="btn-store-info">
-                            <small>Tải trên</small>
-                            <strong>Google Play</strong>
-                        </div>
-                    </a>
-                </div>
-            </div>
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Đóng">&times;</button>
+    <a href="#features" onclick="closeMobileNav()">Tính năng</a>
+    <a href="#pricing" onclick="closeMobileNav()">Bảng giá</a>
+    <a href="#download" onclick="closeMobileNav()">Tải app</a>
+  </div>
 
-            <div class="hero-visual fade-up delay-2">
-                <div class="phone-mockup">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                        <div class="app-header">
-                            <h3>PetVee</h3>
-                            <p>Xin chào! Bé cưng hôm nay thế nào?</p>
-                        </div>
-                        <div class="phone-pet-row">
-                            <div class="mini-pet">
-                                <div class="pet-emoji">🐶</div>
-                                <div class="pet-name">Milo</div>
-                                <div class="pet-status">Khoẻ mạnh</div>
-                            </div>
-                            <div class="mini-pet">
-                                <div class="pet-emoji">🐱</div>
-                                <div class="pet-name">Luna</div>
-                                <div class="pet-status">Khoẻ mạnh</div>
-                            </div>
-                        </div>
-                        <div class="phone-card">
-                            <div class="phone-card-title">Check-in hôm nay</div>
-                            <div class="health-bar">
-                                <span class="health-bar-label">Mắt</span>
-                                <div class="health-bar-track"><div class="health-bar-fill" style="width:95%"></div></div>
-                            </div>
-                            <div class="health-bar">
-                                <span class="health-bar-label">Ăn uống</span>
-                                <div class="health-bar-track"><div class="health-bar-fill" style="width:88%"></div></div>
-                            </div>
-                            <div class="health-bar">
-                                <span class="health-bar-label">Vận động</span>
-                                <div class="health-bar-track"><div class="health-bar-fill" style="width:72%"></div></div>
-                            </div>
-                        </div>
-                        <div class="phone-card" style="padding: 12px 16px;">
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <span style="font-size:20px">🔔</span>
-                                <div>
-                                    <div style="font-size:11px; font-weight:600; color:var(--dark)">Nhắc vaccine</div>
-                                    <div style="font-size:10px; color:var(--gray-500)">Milo — Dại (5 mũi) trong 3 ngày</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="float-card float-1">
-                    <div class="fc-icon">✅</div>
-                    <span>Sức khoẻ tốt!</span>
-                </div>
-                <div class="float-card float-2">
-                    <div class="fc-icon">🔍</div>
-                    <span>AI đang phân tích...</span>
-                </div>
-                <div class="float-card float-3">
-                    <div class="fc-icon">💬</div>
-                    <span>Bác sĩ AI trả lời</span>
-                </div>
-            </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-headline" id="heroHeadline">Thấu hiểu chân tình</h1>
+        <p class="hero-subheadline">Chăm sóc trọn niềm tin.</p>
+        <p class="hero-body">Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày.</p>
+        <div class="hero-cta-row">
+          <a href="#download" class="btn-cta">Dùng thử miễn phí</a>
         </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section class="problem section" id="problem">
-        <div class="container text-center">
-            <span class="section-label fade-up">Vấn đề</span>
-            <h2 class="section-title fade-up delay-1">Bạn lo lắng khi thú cưng không khoẻ?</h2>
-            <p class="section-subtitle mx-auto fade-up delay-2">
-                80% chủ nuôi tại Việt Nam không biết cách nhận biết triệu chứng bệnh sớm ở thú cưng.
-            </p>
-
-            <div class="problem-grid">
-                <div class="problem-card fade-up delay-1">
-                    <div class="problem-icon">😟</div>
-                    <h3>Không biết bệnh nặng hay nhẹ</h3>
-                    <p>Bé có triệu chứng lạ nhưng bạn không chắc có cần đi khám hay chỉ theo dõi tại nhà.</p>
-                </div>
-                <div class="problem-card fade-up delay-2">
-                    <div class="problem-icon">🏥</div>
-                    <h3>Phòng khám đóng cửa</h3>
-                    <p>Nửa đêm bé ốm, phòng khám đã đóng, không hỏi được ai. Google thì quá nhiều thông tin nhiễu.</p>
-                </div>
-                <div class="problem-card fade-up delay-3">
-                    <div class="problem-icon">📅</div>
-                    <h3>Quên lịch vaccine & thuốc</h3>
-                    <p>Khó nhớ lịch tiêm phòng, tẩy giun, và theo dõi sức khoẻ hàng ngày cho nhiều bé cùng lúc.</p>
-                </div>
-            </div>
+        <div class="trust-badges">
+          <span class="trust-badge">🐕 5,000+ sen đã tin dùng</span>
+          <span class="trust-badge">⭐ 4.9 đánh giá</span>
+          <span class="trust-badge">🏥 AI bác sĩ 24/7</span>
         </div>
-    </section>
-
-    <!-- SOLUTION -->
-    <section class="solution section">
-        <div class="container">
-            <div class="solution-content">
-                <div class="solution-text">
-                    <span class="section-label fade-up">Giải pháp</span>
-                    <h2 class="section-title fade-up delay-1">PetVee — Bác sĩ AI<br>túc trực 24/7</h2>
-                    <p class="fade-up delay-2">
-                        Kết hợp trí tuệ nhân tạo và kiến thức thú y chuyên sâu để giúp bạn chăm sóc bé cưng mỗi ngày. 
-                        Phát hiện sớm, chăm sóc đúng cách, an tâm hơn.
-                    </p>
-                    <div class="solution-stats fade-up delay-3">
-                        <div class="stat">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Luôn sẵn sàng</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">16</div>
-                            <div class="stat-label">Chỉ số theo dõi</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">2 phút</div>
-                            <div class="stat-label">Check-in mỗi ngày</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="solution-visual fade-up delay-2">
-                    <div class="sol-card">
-                        <div class="sol-icon">📸</div>
-                        <h4>AI Quét Bệnh</h4>
-                        <p>Chụp ảnh, nhận phân tích ngay</p>
-                    </div>
-                    <div class="sol-card">
-                        <div class="sol-icon">🤖</div>
-                        <h4>AI Bác Sĩ</h4>
-                        <p>Hỏi đáp thú y 24/7</p>
-                    </div>
-                    <div class="sol-card">
-                        <div class="sol-icon">📊</div>
-                        <h4>Theo Dõi</h4>
-                        <p>16 chỉ số sức khoẻ</p>
-                    </div>
-                    <div class="sol-card">
-                        <div class="sol-icon">💉</div>
-                        <h4>Nhắc Lịch</h4>
-                        <p>Không quên vaccine</p>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-frame">
+          <img src="images/screenshot-home.png" alt="PetVee app screenshot" width="560" height="1200" loading="eager">
         </div>
-    </section>
-
-    <!-- APP PREVIEW -->
-    <section class="app-preview section">
-        <div class="container text-center">
-            <span class="section-label fade-up">Trải nghiệm app</span>
-            <h2 class="section-title fade-up delay-1">Giao diện thân thiện, dễ sử dụng</h2>
-            <p class="section-subtitle mx-auto fade-up delay-2">
-                Được thiết kế riêng cho người dùng Việt Nam — hoàn toàn bằng tiếng Việt, 
-                giao diện ấm áp và dễ thao tác.
-            </p>
-
-            <div class="preview-scroll">
-                <div class="preview-phone fade-up delay-1">
-                    <img src="screenshot-home.png" alt="PetVee - Trang chủ theo dõi sức khoẻ">
-                    <div class="preview-phone-label">Trang chủ & Check-in</div>
-                </div>
-                <div class="preview-phone fade-up delay-2">
-                    <img src="screenshot-ai-scanner.png" alt="PetVee - AI Health Scanner">
-                    <div class="preview-phone-label">AI Bác Sĩ & Quét Bệnh</div>
-                </div>
-            </div>
+        <div class="hero-mascot">
+          <img src="images/mascots/hero-duo.png" alt="Dr. Vee và Mochi" width="320" height="320" loading="eager">
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- FEATURES -->
-    <section class="features section" id="features">
-        <div class="container text-center">
-            <span class="section-label fade-up">Tính năng</span>
-            <h2 class="section-title fade-up delay-1">Mọi thứ bé cưng cần, trong một app</h2>
-            <p class="section-subtitle mx-auto fade-up delay-2">
-                PetVee là ứng dụng duy nhất tại Việt Nam tích hợp AI scanner, chatbot bác sĩ, 
-                check-in sức khoẻ, và quản lý vaccine trong một nền tảng.
-            </p>
-
-            <div class="features-grid">
-                <div class="feature-card fade-up delay-1">
-                    <div class="feature-icon">📸</div>
-                    <h3>AI Quét Bệnh</h3>
-                    <p>Chụp ảnh triệu chứng ở 6 khu vực (mắt, da, miệng, tai, phân...), AI phân tích và đánh giá mức độ nghiêm trọng ngay lập tức.</p>
-                </div>
-                <div class="feature-card fade-up delay-2">
-                    <div class="feature-icon">💬</div>
-                    <h3>AI Bác Sĩ</h3>
-                    <p>Chatbot thú y thông minh, hiểu giống loài và tình trạng bé cưng, trả lời mọi câu hỏi sức khoẻ 24/7.</p>
-                </div>
-                <div class="feature-card fade-up delay-3">
-                    <div class="feature-icon">📋</div>
-                    <h3>Check-in Sức Khoẻ</h3>
-                    <p>Theo dõi 16 chỉ số sức khoẻ mỗi ngày. Chỉ mất 2 phút, AI phát hiện xu hướng bất thường và cảnh báo sớm.</p>
-                </div>
-                <div class="feature-card fade-up delay-1">
-                    <div class="feature-icon">🏥</div>
-                    <h3>Tìm Phòng Khám</h3>
-                    <p>Tìm phòng khám thú y gần bạn theo vị trí, xem đánh giá và liên hệ trực tiếp trong app.</p>
-                </div>
-                <div class="feature-card fade-up delay-2">
-                    <div class="feature-icon">🛍️</div>
-                    <h3>Dịch Vụ & Mua Sắm</h3>
-                    <p>Spa, grooming, thức ăn, phụ kiện — tất cả dịch vụ và sản phẩm cho bé cưng trong một nơi.</p>
-                </div>
-                <div class="feature-card fade-up delay-3">
-                    <div class="feature-icon">💉</div>
-                    <h3>Nhắc Vaccine & Cộng Đồng</h3>
-                    <p>Tự động nhắc lịch tiêm phòng. Chia sẻ kinh nghiệm và học hỏi từ cộng đồng yêu thú cưng trên khắp Việt Nam.</p>
-                </div>
-            </div>
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <h2 class="problem-title" data-aos="fade-up">Sen ơi, boss đang cần gì?</h2>
+      <p class="problem-subtitle" data-aos="fade-up" data-aos-delay="100">Mỗi ngày, hàng ngàn sen Việt Nam đang gặp những vấn đề này...</p>
+      <div class="problem-grid">
+        <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="images/mascots/mochi-worried.png" alt="Mochi lo lắng" class="problem-mascot" loading="lazy" width="180" height="180">
+          <h3>Không biết boss bị gì</h3>
+          <p>Triệu chứng lạ nhưng chưa đến mức đi khám? Google cho kết quả lung tung?</p>
         </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="how-it-works section" id="how-it-works">
-        <div class="container text-center">
-            <span class="section-label fade-up">Cách hoạt động</span>
-            <h2 class="section-title fade-up delay-1">3 bước đơn giản</h2>
-            <p class="section-subtitle mx-auto fade-up delay-2">
-                Bắt đầu chăm sóc bé cưng chỉ trong vài phút.
-            </p>
-
-            <div class="steps">
-                <div class="step fade-up delay-1">
-                    <div class="step-number">1</div>
-                    <h3>Tạo hồ sơ thú cưng</h3>
-                    <p>Thêm tên, giống loài, tuổi, cân nặng. Hỗ trợ nhiều bé cùng lúc.</p>
-                </div>
-                <div class="step fade-up delay-2">
-                    <div class="step-number">2</div>
-                    <h3>Check-in mỗi ngày</h3>
-                    <p>Chỉ mất 2 phút ghi nhận sức khoẻ. AI theo dõi và phát hiện bất thường.</p>
-                </div>
-                <div class="step fade-up delay-3">
-                    <div class="step-number">3</div>
-                    <h3>Nhận phân tích AI</h3>
-                    <p>AI tổng hợp dữ liệu, cảnh báo sớm, và đề xuất hành động phù hợp.</p>
-                </div>
-            </div>
+        <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="images/mascots/mochi-confused.png" alt="Mochi bối rối" class="problem-mascot" loading="lazy" width="180" height="180">
+          <h3>Quên lịch tiêm, khám định kỳ</h3>
+          <p>Lịch vaccine, tẩy giun, khám tổng quát — sen nào nhớ nổi?</p>
         </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="pricing section" id="pricing">
-        <div class="container text-center">
-            <span class="section-label fade-up">Bảng giá</span>
-            <h2 class="section-title fade-up delay-1">Chọn gói phù hợp</h2>
-            <p class="section-subtitle mx-auto fade-up delay-2">
-                Bắt đầu miễn phí, nâng cấp khi bạn cần thêm sức mạnh AI.
-            </p>
-
-            <div class="pricing-grid">
-                <!-- Free -->
-                <div class="pricing-card fade-up delay-1">
-                    <div class="pricing-name">Miễn phí</div>
-                    <div class="pricing-desc">Khám phá PetVee</div>
-                    <div class="pricing-amount">
-                        <span class="price">0đ</span>
-                        <span class="price-unit">/ mãi mãi</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Check-in sức khoẻ hàng ngày</li>
-                        <li><span class="check">✓</span> Nhắc lịch vaccine</li>
-                        <li><span class="check">✓</span> Hồ sơ nhiều thú cưng</li>
-                        <li><span class="check">✓</span> Cộng đồng & mẹo sức khoẻ</li>
-                        <li><span class="check">✓</span> Streak & gamification</li>
-                    </ul>
-                    <a href="#download" class="btn-pricing outline">Bắt đầu miễn phí</a>
-                </div>
-
-                <!-- Gói Chăm -->
-                <div class="pricing-card popular fade-up delay-2">
-                    <div class="popular-badge">Phổ biến nhất</div>
-                    <div class="pricing-name">Gói Chăm</div>
-                    <div class="pricing-desc">Cho chủ nuôi chủ động</div>
-                    <div class="pricing-amount">
-                        <span class="price">49K</span>
-                        <span class="price-unit">đ / tháng</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Tất cả tính năng miễn phí</li>
-                        <li><span class="check">✓</span> AI Bác Sĩ — hỏi đáp 24/7</li>
-                        <li><span class="check">✓</span> AI Quét Bệnh cơ bản</li>
-                        <li><span class="check">✓</span> Báo cáo sức khoẻ tuần</li>
-                        <li><span class="check">✓</span> Lịch sử check-in chi tiết</li>
-                    </ul>
-                    <a href="#download" class="btn-pricing primary">Dùng thử ngay</a>
-                </div>
-
-                <!-- Gói Yêu -->
-                <div class="pricing-card fade-up delay-3">
-                    <div class="pricing-name">Gói Yêu</div>
-                    <div class="pricing-desc">Chăm sóc toàn diện</div>
-                    <div class="pricing-amount">
-                        <span class="price">99K</span>
-                        <span class="price-unit">đ / tháng</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><span class="check">✓</span> Tất cả tính năng Gói Chăm</li>
-                        <li><span class="check">✓</span> AI Quét Bệnh nâng cao</li>
-                        <li><span class="check">✓</span> Báo cáo sức khoẻ chi tiết</li>
-                        <li><span class="check">✓</span> Ưu tiên hỗ trợ</li>
-                        <li><span class="check">✓</span> Tính năng mới sớm nhất</li>
-                    </ul>
-                    <a href="#download" class="btn-pricing outline">Chọn Gói Yêu</a>
-                </div>
-            </div>
+        <div class="problem-card" data-aos="fade-up" data-aos-delay="300">
+          <img src="images/mascots/mochi-nighttime.png" alt="Mochi đêm khuya" class="problem-mascot" loading="lazy" width="180" height="180">
+          <h3>Nửa đêm boss ốm, không biết hỏi ai</h3>
+          <p>Phòng khám đóng cửa, hotline không ai nghe — cần lời khuyên ngay lập tức.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- FINAL CTA -->
-    <section class="final-cta section" id="download">
-        <div class="container">
-            <h2 class="fade-up">Bắt đầu chăm sóc bé cưng<br>ngay hôm nay</h2>
-            <p class="fade-up delay-1">Tải PetVee miễn phí. Bác sĩ AI luôn sẵn sàng bên bạn và bé cưng.</p>
-            <div class="hero-buttons fade-up delay-2">
-                <a href="#" class="btn-store">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    <div class="btn-store-info">
-                        <small>Tải trên</small>
-                        <strong>App Store</strong>
-                    </div>
-                </a>
-                <a href="#" class="btn-store">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.29.15.61.24.94.24.33 0 .65-.08.95-.25l10.08-5.82-2.83-2.83L3.18 23.76zM1.81 2.04C1.61 2.4 1.5 2.82 1.5 3.29v17.42c0 .47.11.89.31 1.25l9.3-9.3-9.3-9.62zM21.96 10.79l-3.43-1.98-3.17 3.17 3.17 3.17 3.43-1.98c.63-.36 1.04-1 1.04-1.69s-.41-1.33-1.04-1.69zM14.54 11.98L5.73 2.8l10.11 5.84-1.3 3.34z"/></svg>
-                    <div class="btn-store-info">
-                        <small>Tải trên</small>
-                        <strong>Google Play</strong>
-                    </div>
-                </a>
+  <!-- SOLUTION -->
+  <section class="solution" id="solution">
+    <div class="container">
+      <div class="solution-text" data-aos="fade-up">
+        <h2 class="solution-title">PetVee — Bác sĩ AI trong túi sen</h2>
+        <p class="solution-subtitle">Một ứng dụng, tất cả những gì boss cần.</p>
+        <ul class="solution-bullets">
+          <li>
+            <span class="bullet-icon">✨</span>
+            <span><strong>Quét bệnh AI</strong> — chỉ cần chụp ảnh, biết ngay tình trạng</span>
+          </li>
+          <li>
+            <span class="bullet-icon">💬</span>
+            <span><strong>Hỏi bác sĩ AI 24/7</strong> — câu trả lời chuyên môn, bằng tiếng Việt</span>
+          </li>
+          <li>
+            <span class="bullet-icon">📊</span>
+            <span><strong>Theo dõi sức khoẻ mỗi ngày</strong> — check-in, nhắc lịch, biểu đồ trend</span>
+          </li>
+        </ul>
+      </div>
+      <div class="solution-mascot-wrap" data-aos="fade-up" data-aos-delay="100">
+        <img src="images/mascots/drvee-confident.png" alt="Dr. Vee tự tin" class="solution-mascot" loading="lazy" width="600" height="600">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <span class="section-label" data-aos="fade-up">Tính năng</span>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Tính năng nổi bật</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Được thiết kế để cùng sen chăm sóc boss mỗi ngày — từ quét bệnh đến nhắc lịch.</p>
+
+      <div class="bento-grid">
+        <!-- AI Scanner — full width -->
+        <div class="bento-card bento-scanner full-width" data-aos="fade-up" data-aos-delay="100">
+          <div class="bento-accent"></div>
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">🔬 AI Quét Bệnh</div>
+              <div class="bento-desc">Chụp ảnh triệu chứng ở mắt, da, miệng, tai — AI phân tích và đánh giá mức độ nghiêm trọng ngay lập tức. Không cần chờ đợi, không cần ra ngoài.</div>
             </div>
-            <p class="free-note fade-up delay-3">Miễn phí tải về &bull; Không cần thẻ tín dụng</p>
+            <img src="images/mascots/feat-scanner.png" alt="AI Scanner" class="bento-mascot" loading="lazy" width="260" height="260">
+          </div>
         </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-icon"><img src="logo.png" alt="PetVee"></div>
-                        <div class="logo-text">Pet<span>Vee</span></div>
-                    </div>
-                    <p>Thấu hiểu chân tình — Chăm sóc trọn niềm tin. Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam.</p>
-                </div>
-                <div>
-                    <h4>Sản phẩm</h4>
-                    <ul>
-                        <li><a href="#features">Tính năng</a></li>
-                        <li><a href="#pricing">Bảng giá</a></li>
-                        <li><a href="#download">Tải app</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Hỗ trợ</h4>
-                    <ul>
-                        <li><a href="mailto:hello@petvee.app">Liên hệ</a></li>
-                        <li><a href="mailto:hello@petvee.app">FAQ</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Pháp lý</h4>
-                    <ul>
-                        <li><a href="privacy.html">Chính sách bảo mật</a></li>
-                        <li><a href="terms.html">Điều khoản sử dụng</a></li>
-                    </ul>
-                </div>
+        <!-- AI Chatbot -->
+        <div class="bento-card bento-chatbot" data-aos="fade-up" data-aos-delay="100">
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">💬 AI Bác Sĩ 24/7</div>
+              <div class="bento-desc">Chatbot thú y thông minh, hiểu tiếng Việt, trả lời mọi câu hỏi về sức khoẻ boss bất kể giờ nào.</div>
             </div>
-
-            <div class="footer-bottom">
-                <span>&copy; 2026 PetVee. All rights reserved.</span>
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Instagram">in</a>
-                    <a href="#" aria-label="TikTok">tk</a>
-                </div>
-            </div>
+            <img src="images/mascots/feat-chatbot.png" alt="AI Chatbot" class="bento-mascot" loading="lazy" width="200" height="200">
+          </div>
         </div>
-    </footer>
 
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-        });
+        <!-- Daily Check-in -->
+        <div class="bento-card bento-checkin" data-aos="fade-up" data-aos-delay="200">
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">📋 Check-in Hàng Ngày</div>
+              <div class="bento-desc">Theo dõi sức khoẻ mỗi ngày chỉ mất 2 phút. AI phát hiện xu hướng bất thường và cảnh báo sớm.</div>
+            </div>
+            <img src="images/mascots/feat-checkin.png" alt="Daily Check-in" class="bento-mascot" loading="lazy" width="200" height="200">
+          </div>
+        </div>
 
-        // Mobile nav
-        function toggleMobileNav() {
-            document.getElementById('mobileNav').classList.toggle('active');
-        }
+        <!-- Vaccine -->
+        <div class="bento-card bento-vaccine" data-aos="fade-up" data-aos-delay="100">
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">💉 Nhắc Lịch Vaccine</div>
+              <div class="bento-desc">Tự động nhắc vaccine, tẩy giun, khám định kỳ. Không bao giờ bỏ lỡ lịch quan trọng của boss.</div>
+            </div>
+            <img src="images/mascots/feat-vaccine.png" alt="Vaccine reminders" class="bento-mascot" loading="lazy" width="200" height="200">
+          </div>
+        </div>
 
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        <!-- Nutrition -->
+        <div class="bento-card bento-nutrition" data-aos="fade-up" data-aos-delay="200">
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">🥗 Tư Vấn Dinh Dưỡng</div>
+              <div class="bento-desc">Gợi ý thức ăn phù hợp theo giống, tuổi, cân nặng và tình trạng sức khoẻ hiện tại của boss.</div>
+            </div>
+            <img src="images/mascots/feat-nutrition.png" alt="Nutrition" class="bento-mascot" loading="lazy" width="200" height="200">
+          </div>
+        </div>
 
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-    </script>
+        <!-- Community — full width -->
+        <div class="bento-card bento-community full-width" data-aos="fade-up" data-aos-delay="100">
+          <div class="bento-card-inner">
+            <div class="bento-text">
+              <div class="bento-title">🐾 Cộng Đồng Sen</div>
+              <div class="bento-desc">Chia sẻ kinh nghiệm, hỏi đáp, và học hỏi từ hàng ngàn sen yêu thú cưng trên khắp Việt Nam. Streak, thành tích, badge — chăm boss vui hơn mỗi ngày.</div>
+            </div>
+            <img src="images/mascots/feat-community.png" alt="Community" class="bento-mascot" loading="lazy" width="260" height="260">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <h2 class="pricing-title" data-aos="fade-up">Bảng giá</h2>
+      <p class="pricing-subtitle" data-aos="fade-up" data-aos-delay="100">Bắt đầu miễn phí. Nâng cấp khi boss cần thêm.</p>
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="pricing-card free" data-aos="fade-up" data-aos-delay="100">
+          <div class="pricing-name">Miễn phí</div>
+          <div class="pricing-price">0đ</div>
+          <div class="pricing-period">mãi mãi</div>
+          <ul class="pricing-features">
+            <li><span class="pricing-check">✓</span>Check-in hàng ngày</li>
+            <li><span class="pricing-check">✓</span>Nhắc lịch vaccine</li>
+            <li><span class="pricing-check">✓</span>Cộng đồng sen</li>
+            <li><span class="pricing-check">✓</span>3 lần quét AI/tháng</li>
+            <li><span class="pricing-check">✓</span>5 câu hỏi bác sĩ AI/tháng</li>
+          </ul>
+          <a href="#download" class="btn-pricing btn-pricing-ghost">Bắt đầu miễn phí</a>
+        </div>
+
+        <!-- Gói Chăm -->
+        <div class="pricing-card cham" data-aos="fade-up" data-aos-delay="200">
+          <span class="pricing-badge badge-popular">PHỔ BIẾN</span>
+          <div class="pricing-name">Gói Chăm</div>
+          <div class="pricing-price">49.000đ</div>
+          <div class="pricing-period">/tháng</div>
+          <ul class="pricing-features">
+            <li><span class="pricing-check">✓</span>Tất cả tính năng miễn phí</li>
+            <li><span class="pricing-check">✓</span>Quét AI không giới hạn</li>
+            <li><span class="pricing-check">✓</span>30 câu hỏi bác sĩ AI/tháng</li>
+            <li><span class="pricing-check">✓</span>Lịch sử sức khoẻ chi tiết</li>
+            <li><span class="pricing-check">✓</span>Xuất PDF báo cáo</li>
+          </ul>
+          <a href="#download" class="btn-pricing btn-pricing-orange">Dùng thử ngay</a>
+        </div>
+
+        <!-- Gói Yêu -->
+        <div class="pricing-card yeu" data-aos="fade-up" data-aos-delay="300">
+          <span class="pricing-badge badge-hot">HOT</span>
+          <div class="pricing-name">Gói Yêu</div>
+          <div class="pricing-price">99.000đ</div>
+          <div class="pricing-period">/tháng</div>
+          <ul class="pricing-features">
+            <li><span class="pricing-check">✓</span>Tất cả tính năng Gói Chăm</li>
+            <li><span class="pricing-check">✓</span>Bác sĩ AI không giới hạn</li>
+            <li><span class="pricing-check">✓</span>Ưu tiên phản hồi nhanh</li>
+            <li><span class="pricing-check">✓</span>Tư vấn dinh dưỡng AI</li>
+            <li><span class="pricing-check">✓</span>Badge VIP trong cộng đồng</li>
+          </ul>
+          <a href="#download" class="btn-pricing btn-pricing-white">Chọn Gói Yêu</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section" id="download">
+    <div class="container">
+      <img src="images/mascots/celebration-highfive.png" alt="Dr. Vee và Mochi high-five" class="cta-mascot" loading="lazy" width="400" height="400" data-aos="fade-up">
+      <h2 class="cta-title" data-aos="fade-up" data-aos-delay="50">Tải PetVee — Miễn phí!</h2>
+      <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Có mặt trên iOS và Android</p>
+      <div data-aos="fade-up" data-aos-delay="150">
+        <a href="#" class="btn-cta" style="font-size:18px; padding:18px 40px;">Tải app ngay 🐾</a>
+      </div>
+      <a href="https://petvee.lovable.app" class="cta-web-link" data-aos="fade-up" data-aos-delay="200">Hoặc dùng ngay trên web → petvee.lovable.app</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1 -->
+        <div>
+          <a href="#" class="logo">
+            <div class="logo-icon">PV</div>
+            <span class="logo-text">PetVee</span>
+          </a>
+          <p class="footer-tagline">Thấu hiểu chân tình – Chăm sóc trọn niềm tin.</p>
+          <p class="footer-copyright">© 2026 PetVee. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="TikTok">tk</a>
+          </div>
+        </div>
+
+        <!-- Col 2 -->
+        <div>
+          <div class="footer-col-title">Sản phẩm</div>
+          <ul class="footer-links">
+            <li><a href="#features">Tính năng</a></li>
+            <li><a href="#pricing">Bảng giá</a></li>
+            <li><a href="/privacy.html">Chính sách bảo mật</a></li>
+            <li><a href="/terms.html">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3 -->
+        <div>
+          <div class="footer-col-title">Liên hệ</div>
+          <div class="footer-contact">
+            <span>📧 hello@petvee.app</span>
+            <span>🌐 petvee.app</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="footer-divider">
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+  <script>
+    // AOS init
+    AOS.init({ duration: 600, once: true, offset: 80 });
+
+    // Navbar scroll
+    window.addEventListener('scroll', function() {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile nav
+    function openMobileNav() {
+      document.getElementById('mobileNav').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileNav() {
+      document.getElementById('mobileNav').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Hero kinetic headline
+    document.addEventListener('DOMContentLoaded', function() {
+      var el = document.getElementById('heroHeadline');
+      if (!el) return;
+      var text = el.textContent.trim();
+      var words = text.split(' ');
+      el.textContent = '';
+      words.forEach(function(word, i) {
+        var span = document.createElement('span');
+        span.className = 'kinetic-word';
+        span.textContent = (i < words.length - 1) ? word + ' ' : word;
+        span.style.animationDelay = (i * 0.15) + 's';
+        el.appendChild(span);
+      });
+    });
+  </script>
 </body>
 </html>
