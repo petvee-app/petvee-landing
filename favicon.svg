@@ -1,16 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0.7" y2="1">
+    <linearGradient id="g" x1="0.3" y1="0" x2="0.7" y2="1">
       <stop offset="0%" stop-color="#FFB347"/>
-      <stop offset="50%" stop-color="#FF8C42"/>
+      <stop offset="40%" stop-color="#FF9A3C"/>
       <stop offset="100%" stop-color="#FF6B35"/>
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="#fff"/>
-  <path d="M9 54V13h10c9 0 16 5 16 13s-7 13-16 13h-4v15z" fill="url(#g)"/>
-  <ellipse cx="23" cy="25" rx="3.2" ry="2.8" fill="#fff"/>
-  <circle cx="18" cy="20" r="1.8" fill="#fff"/>
-  <circle cx="23" cy="17.5" r="1.8" fill="#fff"/>
-  <circle cx="28" cy="20" r="1.8" fill="#fff"/>
-  <path d="M37 13l9 28 9-28h-5l-4 17-4-17z" fill="url(#g)"/>
+  <!-- P letter with round bowl -->
+  <path d="M10 53V12h8.5c8.5 0 15.5 4.5 15.5 13.5C34 34.5 27 39 18.5 39H16v14z" fill="url(#g)"/>
+  <!-- Paw print in P bowl: main pad -->
+  <ellipse cx="22.5" cy="26.5" rx="3.5" ry="3" fill="#fff"/>
+  <!-- Paw toes -->
+  <ellipse cx="17" cy="20.5" rx="2" ry="1.8" fill="#fff"/>
+  <ellipse cx="22.5" cy="18" rx="2" ry="1.8" fill="#fff"/>
+  <ellipse cx="28" cy="20.5" rx="2" ry="1.8" fill="#fff"/>
+  <!-- V letter as checkmark style -->
+  <path d="M36 12h6l5.5 20L53 12h6L49.5 53h-4z" fill="url(#g)"/>
 </svg>
