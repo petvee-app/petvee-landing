@@ -1,18 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#FF8C42"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#FFB347"/>
+      <stop offset="50%" stop-color="#FF8C42"/>
       <stop offset="100%" stop-color="#FF6B35"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#g)"/>
-  <!-- P letter -->
-  <path d="M12 52V16h10c7.5 0 13 4.5 13 11s-5.5 11-13 11h-3v14z" fill="#fff"/>
-  <!-- Paw print inside P bowl -->
-  <circle cx="25" cy="24.5" r="2.2" fill="url(#g)"/>
-  <circle cx="20.5" cy="21" r="1.5" fill="url(#g)"/>
-  <circle cx="25" cy="19.5" r="1.5" fill="url(#g)"/>
-  <circle cx="29.5" cy="21" r="1.5" fill="url(#g)"/>
-  <!-- V letter -->
-  <path d="M38 16l8 22 8-22h-5.5L44 28.5 39.5 16z" fill="#fff"/>
+  <rect width="64" height="64" rx="14" fill="#fff"/>
+  <path d="M9 54V13h10c9 0 16 5 16 13s-7 13-16 13h-4v15z" fill="url(#g)"/>
+  <ellipse cx="23" cy="25" rx="3.2" ry="2.8" fill="#fff"/>
+  <circle cx="18" cy="20" r="1.8" fill="#fff"/>
+  <circle cx="23" cy="17.5" r="1.8" fill="#fff"/>
+  <circle cx="28" cy="20" r="1.8" fill="#fff"/>
+  <path d="M37 13l9 28 9-28h-5l-4 17-4-17z" fill="url(#g)"/>
 </svg>
