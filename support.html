@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung tâm Hỗ trợ — PetVee</title>
+    <meta name="description" content="Trung tâm hỗ trợ PetVee. Câu hỏi thường gặp, hướng dẫn sử dụng, và thông tin liên hệ.">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --orange-primary: #FF6B35;
+            --orange-light: #FF8C42;
+            --orange-100: #FFF5E6;
+            --orange-50: #FFF9F2;
+            --dark: #1A1A2E;
+            --dark-600: #2D2D44;
+            --gray-500: #6B7280;
+            --gray-300: #D1D5DB;
+            --white: #FFFFFF;
+            --green: #00B894;
+            --purple: #6C5CE7;
+            --blue: #0984E3;
+            --cream: #FFFAF3;
+        }
+        body { font-family: 'Be Vietnam Pro', sans-serif; color: var(--dark); background: var(--white); }
+
+        .header {
+            background: linear-gradient(135deg, var(--orange-100) 0%, var(--cream) 100%);
+            padding: 40px 24px 48px;
+            text-align: center;
+        }
+        .header a.back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: var(--orange-primary);
+            font-weight: 500;
+        }
+        .header h1 { font-size: 32px; font-weight: 800; color: var(--dark); }
+        .header p.subtitle { font-size: 16px; color: var(--gray-500); margin-top: 8px; line-height: 1.6; }
+
+        .nav-categories {
+            max-width: 800px;
+            margin: -24px auto 0;
+            padding: 0 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .nav-cat {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .nav-cat:hover, .nav-cat.active {
+            background: var(--orange-primary);
+            color: var(--white);
+            border-color: var(--orange-primary);
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .section { margin-bottom: 48px; }
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--orange-100);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .faq-item {
+            border: 1px solid #F0EBE4;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: box-shadow 0.2s ease;
+        }
+        .faq-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+        .faq-q {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 20px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            background: var(--white);
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+        .faq-q:hover { background: var(--orange-50); }
+        .faq-arrow {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.25s ease;
+            color: var(--gray-500);
+        }
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.open .faq-a {
+            max-height: 500px;
+        }
+        .faq-a-inner {
+            padding: 0 20px 18px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--dark-600);
+        }
+        .faq-a-inner a { color: var(--orange-primary); }
+        .faq-a-inner ul { margin: 8px 0 8px 20px; }
+        .faq-a-inner ul li { margin-bottom: 4px; }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .guide-card {
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid #F0EBE4;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .guide-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .guide-card .step {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .guide-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+        .guide-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-500);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .contact-card {
+            padding: 28px 24px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #F0EBE4;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+        .contact-card h3 { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+        .contact-card p { font-size: 14px; color: var(--gray-500); line-height: 1.5; margin-bottom: 10px; }
+        .contact-card a {
+            color: var(--orange-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .contact-card a:hover { text-decoration: underline; }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: var(--orange-100);
+            color: var(--orange-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .social-link:hover { background: #FFE8D6; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 26px; }
+            .nav-categories { gap: 8px; }
+            .nav-cat { padding: 8px 14px; font-size: 13px; }
+            .guide-grid, .contact-grid { grid-template-columns: 1fr; }
+            .social-links { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a class="back" href="index.html">← Về trang chủ PetVee</a>
+        <h1>Trung tâm Hỗ trợ</h1>
+        <p class="subtitle">Tìm câu trả lời nhanh, hướng dẫn sử dụng, hoặc liên hệ đội ngũ PetVee</p>
+    </div>
+
+    <nav class="nav-categories">
+        <a href="#faq-general" class="nav-cat active">❓ Tổng quan</a>
+        <a href="#faq-ai" class="nav-cat">🤖 AI & Quét bệnh</a>
+        <a href="#faq-account" class="nav-cat">👤 Tài khoản</a>
+        <a href="#faq-pricing" class="nav-cat">💎 Gói & Thanh toán</a>
+        <a href="#guide" class="nav-cat">📖 Hướng dẫn</a>
+        <a href="#contact" class="nav-cat">📬 Liên hệ</a>
+    </nav>
+
+    <div class="content">
+
+        <!-- FAQ: Tổng quan -->
+        <div class="section" id="faq-general">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#FFF5E6;color:#FF6B35;">❓</span>
+                Câu hỏi tổng quan
+            </h2>
+
+            <div class="faq-item">
+                <button class="faq-q">PetVee là gì?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    PetVee là ứng dụng chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam, tích hợp AI giúp bạn quét bệnh qua ảnh, hỏi bác sĩ AI 24/7, theo dõi sức khoẻ hàng ngày, nhắc lịch vaccine và nhiều tính năng khác.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">PetVee có miễn phí không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Có! PetVee có gói miễn phí với các tính năng cơ bản: check-in hàng ngày, nhắc lịch vaccine, cộng đồng sen, 3 lần quét AI/tháng và 5 câu hỏi bác sĩ AI/tháng. Bạn có thể nâng cấp lên Gói Chăm (49.000đ/tháng) hoặc Gói Yêu (99.000đ/tháng) để mở khoá thêm tính năng.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">PetVee hỗ trợ những loại thú cưng nào?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Hiện tại PetVee hỗ trợ chó và mèo — hai loại thú cưng phổ biến nhất tại Việt Nam. Chúng tôi đang nghiên cứu mở rộng thêm các loài khác trong tương lai.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">PetVee có thay thế bác sĩ thú y không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Không. PetVee là công cụ hỗ trợ tham khảo, giúp bạn nhận biết sớm các vấn đề sức khoẻ và có thêm thông tin trước khi đưa thú cưng đến phòng khám. Trong các trường hợp khẩn cấp hoặc nghiêm trọng, hãy luôn đưa thú cưng đến bác sĩ thú y.
+                </div></div>
+            </div>
+        </div>
+
+        <!-- FAQ: AI & Quét bệnh -->
+        <div class="section" id="faq-ai">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#EBE4FF;color:#6C5CE7;">🤖</span>
+                AI & Quét bệnh
+            </h2>
+
+            <div class="faq-item">
+                <button class="faq-q">AI Quét Bệnh hoạt động như thế nào?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Bạn chỉ cần chụp ảnh vùng da, mắt, tai hoặc bất kỳ khu vực nào bạn nghi ngờ có vấn đề. AI sẽ phân tích hình ảnh và đưa ra đánh giá sơ bộ về tình trạng sức khoẻ, kèm theo gợi ý hành động tiếp theo.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Kết quả AI Quét Bệnh có chính xác không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    AI của PetVee được huấn luyện với dữ liệu y khoa thú y và liên tục cải thiện. Tuy nhiên, kết quả chỉ mang tính tham khảo và không thay thế chẩn đoán của bác sĩ thú y chuyên môn. Chúng tôi khuyến khích bạn sử dụng kết quả này như bước sàng lọc ban đầu.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Bác sĩ AI có thể trả lời những câu hỏi gì?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Bác sĩ AI có thể tư vấn về:
+                    <ul>
+                        <li>Triệu chứng bệnh thường gặp ở chó, mèo</li>
+                        <li>Chế độ dinh dưỡng và khẩu phần ăn</li>
+                        <li>Lịch vaccine và tẩy giun</li>
+                        <li>Chăm sóc thú cưng mới (puppy/kitten)</li>
+                        <li>Hành vi bất thường và cách xử lý</li>
+                        <li>Sơ cứu cơ bản trong tình huống khẩn cấp</li>
+                    </ul>
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Ảnh tôi tải lên có được bảo mật không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Có. Ảnh của bạn chỉ được sử dụng để phân tích AI và không được chia sẻ với bên thứ ba. Dữ liệu được mã hoá và lưu trữ an toàn. Xem thêm tại <a href="privacy.html">Chính sách Bảo mật</a>.
+                </div></div>
+            </div>
+        </div>
+
+        <!-- FAQ: Tài khoản -->
+        <div class="section" id="faq-account">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#E8F8F5;color:#00B894;">👤</span>
+                Tài khoản & Dữ liệu
+            </h2>
+
+            <div class="faq-item">
+                <button class="faq-q">Làm sao để tạo tài khoản PetVee?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Tải app PetVee từ App Store hoặc Google Play, mở app và đăng ký bằng email hoặc tài khoản Google. Quá trình chỉ mất khoảng 30 giây.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Tôi có thể thêm nhiều thú cưng không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Có! Bạn có thể thêm không giới hạn số lượng thú cưng vào tài khoản. Mỗi bé sẽ có hồ sơ sức khoẻ riêng với lịch sử check-in, lịch vaccine và dữ liệu AI riêng biệt.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Làm sao để xoá tài khoản?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Vào <strong>Cài đặt → Tài khoản → Xoá tài khoản</strong> trong app. Hoặc gửi email đến <a href="mailto:privacy@petvee.app">privacy@petvee.app</a> với tiêu đề "Yêu cầu xoá tài khoản". Chúng tôi sẽ xử lý trong vòng 48 giờ. Lưu ý: tất cả dữ liệu sẽ bị xoá vĩnh viễn.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Quên mật khẩu thì làm sao?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Tại màn hình đăng nhập, chọn <strong>"Quên mật khẩu?"</strong>. Nhập email đã đăng ký, bạn sẽ nhận được link đặt lại mật khẩu trong vòng vài phút. Kiểm tra cả thư mục Spam nếu không thấy email.
+                </div></div>
+            </div>
+        </div>
+
+        <!-- FAQ: Gói & Thanh toán -->
+        <div class="section" id="faq-pricing">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#FFF8E1;color:#F0960A;">💎</span>
+                Gói dịch vụ & Thanh toán
+            </h2>
+
+            <div class="faq-item">
+                <button class="faq-q">Có những gói nào và giá bao nhiêu?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    PetVee có 3 gói:
+                    <ul>
+                        <li><strong>Miễn phí (0đ):</strong> Check-in, nhắc vaccine, cộng đồng, 3 quét AI + 5 câu hỏi AI/tháng</li>
+                        <li><strong>Gói Chăm (49.000đ/tháng):</strong> Quét AI không giới hạn, 30 câu hỏi AI, lịch sử sức khoẻ, xuất PDF</li>
+                        <li><strong>Gói Yêu (99.000đ/tháng):</strong> Tất cả không giới hạn, ưu tiên phản hồi, tư vấn dinh dưỡng AI, badge VIP</li>
+                    </ul>
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Thanh toán bằng cách nào?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Thanh toán qua App Store (iOS) hoặc Google Play (Android). Gói sẽ tự động gia hạn hàng tháng. Bạn có thể huỷ bất kỳ lúc nào trong phần quản lý đăng ký của điện thoại.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Làm sao để huỷ gói?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    <strong>iOS:</strong> Vào Cài đặt iPhone → Apple ID → Đăng ký → PetVee → Huỷ đăng ký.<br>
+                    <strong>Android:</strong> Mở Google Play → Menu → Đăng ký → PetVee → Huỷ.<br><br>
+                    Bạn vẫn được sử dụng gói đã thanh toán đến hết chu kỳ hiện tại.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Có hoàn tiền không?
+                    <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">
+                    Việc hoàn tiền được xử lý qua App Store hoặc Google Play theo chính sách của từng nền tảng. Nếu bạn gặp vấn đề, hãy liên hệ <a href="mailto:hello@petvee.app">hello@petvee.app</a> và chúng tôi sẽ hỗ trợ.
+                </div></div>
+            </div>
+        </div>
+
+        <!-- Hướng dẫn sử dụng -->
+        <div class="section" id="guide">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#EBE4FF;color:#6C5CE7;">📖</span>
+                Hướng dẫn sử dụng
+            </h2>
+
+            <h3 style="font-size:17px;font-weight:700;color:var(--dark);margin-bottom:16px;">Bắt đầu với PetVee</h3>
+            <div class="guide-grid" style="margin-bottom:32px;">
+                <div class="guide-card">
+                    <div class="step" style="background:var(--orange-primary);">1</div>
+                    <h3>Tải app</h3>
+                    <p>Tải PetVee từ App Store hoặc Google Play. Đăng ký bằng email hoặc Google.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="step" style="background:var(--green);">2</div>
+                    <h3>Thêm thú cưng</h3>
+                    <p>Nhập thông tin boss: tên, giống, tuổi, cân nặng. Thêm ảnh đại diện cho dễ nhận.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="step" style="background:var(--purple);">3</div>
+                    <h3>Check-in hàng ngày</h3>
+                    <p>Ghi nhận tình trạng boss mỗi ngày: ăn uống, năng lượng, phân, hành vi.</p>
+                </div>
+            </div>
+
+            <h3 style="font-size:17px;font-weight:700;color:var(--dark);margin-bottom:16px;">Sử dụng AI Quét Bệnh</h3>
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <div class="step" style="background:var(--purple);">1</div>
+                    <h3>Chụp ảnh rõ nét</h3>
+                    <p>Chụp vùng cần kiểm tra với ánh sáng tốt, lấy nét rõ ràng, không bị mờ.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="step" style="background:var(--purple);">2</div>
+                    <h3>Tải lên & chờ AI</h3>
+                    <p>Tải ảnh lên, AI sẽ phân tích trong vài giây và đưa ra kết quả đánh giá.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="step" style="background:var(--purple);">3</div>
+                    <h3>Xem kết quả & hành động</h3>
+                    <p>Đọc đánh giá AI, làm theo gợi ý. Nếu cần, hỏi thêm Bác sĩ AI hoặc đến phòng khám.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liên hệ -->
+        <div class="section" id="contact">
+            <h2 class="section-title">
+                <span class="section-icon" style="background:#E3F2FD;color:#0984E3;">📬</span>
+                Liên hệ hỗ trợ
+            </h2>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon" style="background:#FFF5E6;">📧</div>
+                    <h3>Email</h3>
+                    <p>Phản hồi trong vòng 24 giờ</p>
+                    <a href="mailto:hello@petvee.app">hello@petvee.app</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon" style="background:#EBE4FF;">🔒</div>
+                    <h3>Bảo mật & Dữ liệu</h3>
+                    <p>Về quyền riêng tư và xoá dữ liệu</p>
+                    <a href="mailto:privacy@petvee.app">privacy@petvee.app</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon" style="background:#E8F8F5;">🌐</div>
+                    <h3>Website</h3>
+                    <p>Trang chủ PetVee</p>
+                    <a href="index.html">petvee.app</a>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://facebook.com/petvee.app" class="social-link" target="_blank" rel="noopener">📘 Facebook</a>
+                <a href="https://tiktok.com/@petvee.app" class="social-link" target="_blank" rel="noopener">🎵 TikTok</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-q').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var item = this.closest('.faq-item');
+                var wasOpen = item.classList.contains('open');
+                item.classList.toggle('open');
+            });
+        });
+
+        document.querySelectorAll('.nav-cat').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-cat').forEach(function(l) { l.classList.remove('active'); });
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
