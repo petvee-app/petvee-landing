@@ -86,6 +86,30 @@
       transform: translateY(-1px);
     }
     .btn-cta:active { transform: scale(0.98); }
+    .btn-cta-web {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--orange-primary);
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      border: 2px solid var(--orange-primary);
+      border-radius: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-cta-web:hover {
+      background: var(--orange-primary);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: var(--cta-shadow);
+    }
+    .btn-cta-web:active { transform: scale(0.98); }
     .btn-cta-outline {
       display: inline-flex;
       align-items: center;
@@ -774,14 +798,13 @@
       color: #6B5A4A;
       margin-bottom: 36px;
     }
-    .cta-web-link {
-      display: block;
-      margin-top: 20px;
-      font-size: 15px;
-      color: var(--text-muted);
-      text-decoration: none;
+    .cta-buttons-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
-    .cta-web-link:hover { color: var(--orange-primary); }
 
     /* ── FOOTER ── */
     .footer {
@@ -931,6 +954,7 @@
         <li><a href="#features">Tính năng</a></li>
         <li><a href="#pricing">Bảng giá</a></li>
         <li><a href="support.html">Hỗ trợ</a></li>
+        <li class="nav-cta-link"><a href="https://petvee.lovable.app" target="_blank" rel="noopener">Dùng thử web</a></li>
         <li class="nav-cta-link"><a href="#download">Tải app</a></li>
       </ul>
       <button class="mobile-toggle" onclick="openMobileNav()" aria-label="Mở menu">
@@ -945,6 +969,7 @@
     <a href="#features" onclick="closeMobileNav()">Tính năng</a>
     <a href="#pricing" onclick="closeMobileNav()">Bảng giá</a>
     <a href="support.html" onclick="closeMobileNav()">Hỗ trợ</a>
+    <a href="https://petvee.lovable.app" target="_blank" rel="noopener" onclick="closeMobileNav()" style="color:#FF6B35;font-weight:700;">🌐 Dùng thử web</a>
     <a href="#download" onclick="closeMobileNav()">Tải app</a>
   </div>
 
@@ -956,7 +981,8 @@
         <p class="hero-subheadline">Chăm sóc trọn niềm tin.</p>
         <p class="hero-body">Ứng dụng AI chăm sóc sức khoẻ thú cưng đầu tiên tại Việt Nam. Quét bệnh, hỏi bác sĩ AI, theo dõi sức khoẻ mỗi ngày.</p>
         <div class="hero-cta-row">
-          <a href="#download" class="btn-cta">Dùng thử miễn phí</a>
+          <a href="#download" class="btn-cta">Tải app miễn phí</a>
+          <a href="https://petvee.lovable.app" target="_blank" rel="noopener" class="btn-cta-web">🌐 Dùng ngay trên web</a>
         </div>
         <div class="trust-badges">
           <span class="trust-badge">🐕 5,000+ sen đã tin dùng</span>
@@ -1161,11 +1187,11 @@
     <div class="container">
       <img src="images/mascots/celebration-highfive.png" alt="Dr. Vee và Mochi high-five" class="cta-mascot" loading="lazy" width="400" data-aos="fade-up">
       <h2 class="cta-title" data-aos="fade-up" data-aos-delay="50">Tải PetVee — Miễn phí!</h2>
-      <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Có mặt trên iOS và Android</p>
-      <div data-aos="fade-up" data-aos-delay="150">
+      <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Có mặt trên iOS, Android và Web</p>
+      <div class="cta-buttons-row" data-aos="fade-up" data-aos-delay="150">
         <a href="#" class="btn-cta" style="font-size:18px; padding:18px 40px;">Tải app ngay 🐾</a>
+        <a href="https://petvee.lovable.app" target="_blank" rel="noopener" class="btn-cta-web" style="font-size:18px; padding:18px 40px;">🌐 Dùng bản web</a>
       </div>
-      <a href="https://petvee.lovable.app" class="cta-web-link" data-aos="fade-up" data-aos-delay="200">Hoặc dùng ngay trên web → petvee.lovable.app</a>
     </div>
   </section>
 
