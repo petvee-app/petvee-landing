@@ -11,6 +11,9 @@
   <meta property="og:url" content="https://petvee.app">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="vi_VN">
+  <link rel="alternate" hreflang="vi" href="https://petvee.app/">
+  <link rel="alternate" hreflang="en" href="https://petvee.app/en/">
+  <link rel="alternate" hreflang="x-default" href="https://petvee.app/">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
@@ -214,6 +217,10 @@
       box-shadow: var(--cta-shadow);
       transform: translateY(-1px);
     }
+    .nav-lang { font-size: 14px; font-weight: 600; color: rgba(45,27,14,0.5); text-decoration: none; border: 1px solid rgba(45,27,14,0.15); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; }
+    .nav-lang:hover { color: var(--orange-primary); border-color: var(--orange-primary); }
+    .navbar.scrolled .nav-lang { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); }
+    .navbar.scrolled .nav-lang:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
     .mobile-toggle {
       display: none;
       background: none;
@@ -954,6 +961,7 @@
         <li><a href="#features">Tính năng</a></li>
         <li><a href="#pricing">Bảng giá</a></li>
         <li><a href="support.html">Hỗ trợ</a></li>
+        <li><a href="/en/" class="nav-lang">EN</a></li>
         <li class="nav-cta-link"><a href="https://app.petvee.app">Dùng thử web</a></li>
         <li class="nav-cta-link"><a href="#download">Tải app</a></li>
       </ul>
@@ -969,6 +977,7 @@
     <a href="#features" onclick="closeMobileNav()">Tính năng</a>
     <a href="#pricing" onclick="closeMobileNav()">Bảng giá</a>
     <a href="support.html" onclick="closeMobileNav()">Hỗ trợ</a>
+    <a href="/en/" onclick="closeMobileNav()" class="nav-lang" style="display:inline-block;margin:8px auto;">EN</a>
     <a href="https://app.petvee.app" onclick="closeMobileNav()" style="color:#FF6B35;font-weight:700;">🌐 Dùng thử web</a>
     <a href="#download" onclick="closeMobileNav()">Tải app</a>
   </div>
@@ -1189,7 +1198,7 @@
       <h2 class="cta-title" data-aos="fade-up" data-aos-delay="50">Tải PetVee — Miễn phí!</h2>
       <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Có mặt trên iOS, Android và Web</p>
       <div class="cta-buttons-row" data-aos="fade-up" data-aos-delay="150">
-        <a href="#" class="btn-cta" style="font-size:18px; padding:18px 40px;">Tải app ngay 🐾</a>
+        <a href="#" class="btn-cta" style="font-size:18px; padding:18px 40px;">Tải app ngay</a>
         <a href="https://app.petvee.app" class="btn-cta-web" style="font-size:18px; padding:18px 40px;">🌐 Dùng bản web</a>
       </div>
     </div>
